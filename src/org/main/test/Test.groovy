@@ -19,8 +19,8 @@ class Test {
     def tryGroovyFeature(String text) {
         def strArr = []
         try{
-            (1..20).each {
-                strArr << it.toString() + "Hello \n"
+            for(def i = 0; i < 20; i++) {
+                strArr << i.toString() + " Hello \n"
             }
         } catch(Exception e) {
             print e
