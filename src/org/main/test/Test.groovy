@@ -19,7 +19,7 @@ class Test {
     def tryGroovyFeature(String text) {
         def strArr = []
         try{
-            for(def i = 0; i < 20; i++) {
+            for(i in (1..20)) {
                 strArr << i.toString() + " Hello \n"
             }
         } catch(Exception e) {
