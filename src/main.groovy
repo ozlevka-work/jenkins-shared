@@ -3,9 +3,9 @@
  */
 
 
-import org.main.test.Test
+import com.ericom.jenkins.BuildHelper
 
 
-def test = new Test()
+def test = new BuildHelper()
 
-print test.tryGroovyFeature("")
+test.readExecutedShell()
