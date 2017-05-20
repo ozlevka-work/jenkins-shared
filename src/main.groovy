@@ -8,4 +8,4 @@ import com.ericom.jenkins.BuildHelper
 
 def test = new BuildHelper()
 
-test.readExecutedShell()
+println test.readExecutedShell()

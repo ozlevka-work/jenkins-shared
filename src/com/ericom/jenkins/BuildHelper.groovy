@@ -12,6 +12,6 @@ class BuildHelper {
 
         proc.consumeProcessOutput(out, err)
 
-        println out
+        return new Tuple2<>(out.toString(), err.toString())
     }
 }
