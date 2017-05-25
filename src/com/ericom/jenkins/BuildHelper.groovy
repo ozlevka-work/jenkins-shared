@@ -22,6 +22,12 @@ class BuildHelper {
 
 
     def testMyTest() {
-        return this.steps.getClass().getName()
+        steps.stage('Hello world') {
+            steps.sh 'echo "Hello wordissiomo"'
+        }
+
+        steps.stage('Hello end of world') {
+            steps.sh "echo $JAVA_HOME"
+        }
     }
 }
