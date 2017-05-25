@@ -22,6 +22,6 @@ class BuildHelper {
 
 
     def testMyTest() {
-        echo this.steps.getClass().getName()
+        return this.steps.getClass().getName()
     }
 }
