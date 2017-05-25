@@ -29,5 +29,9 @@ class BuildHelper implements Serializable {
         steps.stage('Hello end of world') {
             steps.sh 'echo $JAVA_HOME'
         }
+
+        steps.stage('Test open') {
+            steps.echo steps.currentBuild.toString()
+        }
     }
 }
