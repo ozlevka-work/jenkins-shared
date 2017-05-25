@@ -5,9 +5,10 @@ package com.ericom.jenkins
  */
 class BuildHelper implements Serializable {
     def steps
-
-    BuildHelper(steps) {
+    def current
+    BuildHelper(steps, current) {
         this.steps = steps
+        this.current = current
     }
 
     def readExecutedShell() {
