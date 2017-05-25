@@ -17,6 +17,6 @@ class BuildHelper {
 
 
     def testMyTest() {
-        echo 'Hello world'
+        println jenkins
     }
 }
