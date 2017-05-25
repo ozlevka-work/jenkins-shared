@@ -14,4 +14,9 @@ class BuildHelper {
 
         return [out.toString(), err.toString()]
     }
+
+
+    def testMyTest() {
+        echo 'Hello world'
+    }
 }

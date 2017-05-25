@@ -3,9 +3,6 @@
  */
 
 
-import com.ericom.jenkins.BuildHelper
 
-
-def test = new BuildHelper()
-
-println test.readExecutedShell()
+def dt = new Date()
+print dt.format("yyMMdd-HH.mm")
