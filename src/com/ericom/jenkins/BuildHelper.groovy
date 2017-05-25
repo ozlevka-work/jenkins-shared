@@ -32,7 +32,7 @@ class BuildHelper implements Serializable {
         }
 
         steps.stage('Test open') {
-            steps.echo steps.currentBuild.toString()
+            steps.echo steps.current.toString()
         }
     }
 }
