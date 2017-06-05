@@ -16,6 +16,6 @@ class PipeLine implements Serializable {
 
 
     def run() {
-        this.steps.sh "Hello first using of line"
+        this.steps.echo "Hello first using of line"
     }
 }
