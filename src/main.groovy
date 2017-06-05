@@ -1,8 +1,11 @@
+import com.ericom.jenkins.PipeLine
+
 /**
  * Created by lev on 5/19/17.
  */
 
 
 
-def dt = new Date()
-print dt.format("yyMMdd-HH.mm")
+def line = new PipeLine(null, null)
+
+line.run()
