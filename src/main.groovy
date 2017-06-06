@@ -8,10 +8,17 @@ import org.yaml.snakeyaml.Yaml
  */
 
 
+def testLoadConfig() {
+    def path = 'resources/com/ericom/defenition/component-defenition.yml'
+    def cofStr = (new File(path)).text
+    def pl = new PipeLine(null, null)
+
+    pl.loadConfig(cofStr)
+    println pl.config
+}
 
 
-def y = new Yaml();
 
-def obj = y.load(new FileReader("/home/lev/projects/Shield/Dev-Feb16/deploy-shield-new.yml"))
+testLoadConfig()
 
 
