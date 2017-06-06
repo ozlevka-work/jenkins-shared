@@ -1,4 +1,11 @@
 
+credentilas:
+  git: ozlevka-github
+  docker: beny-docker-hub
+
+svc:
+  url: 'https://github.com/EricomSoftwareLtd/SB.git'
+
 components:
     consul:
       path: Containers/Docker/shield-configuration
