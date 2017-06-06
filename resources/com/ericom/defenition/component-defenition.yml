@@ -1,0 +1,39 @@
+
+components:
+    consul:
+      path: Containers/Docker/shield-configuration
+
+    admin:
+      path: Containers/Docker/shield-admin
+
+    consul-admin:
+      path: Containers/Docker/shield-admin-orig
+
+    ubuntu:
+      path: Containers/Docker/secure-remote-browser-ubuntu-base
+      dependency:
+        - nodejs
+        - cef
+
+    nodejs:
+      path: Containers/Docker/secure-remote-browser-ubuntu-nodejs-xdummy
+      dependency:
+        - cef
+
+    cef:
+      path: Containers/Docker/shield-cef
+
+    proxy:
+      path: Containers/Docker/shield-squid-alpine
+
+    icap:
+      path: Containers/Docker/shield-icap
+
+    elk:
+      path: Containers/Docker/shield-elk
+
+    broker:
+      path: Containers/Docker/shield-broker
+
+    portainer:
+      path: Containers/Docker/shield-portainer
