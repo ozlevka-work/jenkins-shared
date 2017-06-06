@@ -19,6 +19,6 @@ class PipeLine implements Serializable {
 
 
     def run() {
-        this.steps.echo "Hello first using of line"
+        println(this.steps.metaClass.methods*.toString())
     }
 }
