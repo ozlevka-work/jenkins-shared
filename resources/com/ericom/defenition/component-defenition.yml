@@ -5,6 +5,7 @@ credentilas:
 
 svc:
   url: 'https://github.com/EricomSoftwareLtd/SB.git'
+  branch: master
 
 components:
     consul:

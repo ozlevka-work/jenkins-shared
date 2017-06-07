@@ -59,6 +59,14 @@ def testArray = [
         "Containers/Docker/shield-configuration/Dockerfile"
 ]
 
+
+def testContainsKey() {
+    def config = testLoadConfig()
+
+    assert !config.config['svc'].containsKey('branch')
+}
+
+
 def testChangesFinding() {
 
 }
@@ -66,5 +74,7 @@ def testChangesFinding() {
 
 
 testConfig()
+
+testContainsKey()
 
 
