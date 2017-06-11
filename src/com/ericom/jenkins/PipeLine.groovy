@@ -33,6 +33,16 @@ class PipeLine implements Serializable {
     }
 
 
+    def runWithCredentials() {
+        this.steps.withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: this.config['credentilas']['docker'],
+                                     usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+            this.steps.stage("Login to docker") {
+                this.steps.sh "sudo docker logout && sudo docker login -u $USERNAME -p $PASSWORD"
+            }
+        }
+    }
+
+
     def fetchChangesCodeChanges() {
         this.steps.stage("Fetch changes") {
             if (this.config["svc"].containsKey('branch')) {
@@ -93,12 +103,27 @@ class PipeLine implements Serializable {
             needed_to_build.add(key)
             if(this.config['components'][key].containsKey('dependency')) {
                 for(int j = 0; j < this.config['components'][key]['dependency'].size(); j++) {
+                    testAlreadyExists(needed_to_build, this.config['components'][key]['dependency'][j])
                     needed_to_build.add(this.config['components'][key]['dependency'][j])
                 }
             }
         }
 
         return needed_to_build
+    }
+
+
+    def testAlreadyExists(collection, item) {
+        def indexes = []
+        for (int i = 0; i < collection.size(); i++) {
+            if (collection[i] == item) {
+                indexes.add(i)
+            }
+        }
+
+        for(int i = 0; i < indexes.size(); i++) {
+            collection.remove(indexes[i])
+        }
     }
 
 
