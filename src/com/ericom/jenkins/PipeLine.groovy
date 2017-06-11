@@ -26,7 +26,7 @@ class PipeLine implements Serializable {
 
     def run() {
         if (fetchChangesCodeChanges()) {
-
+            runBuildChanged()
         } else {
             this.steps.echo "No changes in code found"
         }
@@ -102,7 +102,7 @@ class PipeLine implements Serializable {
     }
 
 
-    def runBuildForChanged() {
+    def runBuildChanged() {
         this.steps.stage('Build Images') {
             def build_array = makeDependencies()
             for(i = 0; i < build_array.size(); i++) {
