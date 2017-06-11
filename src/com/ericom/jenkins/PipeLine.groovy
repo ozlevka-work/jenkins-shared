@@ -37,7 +37,7 @@ class PipeLine implements Serializable {
         this.steps.withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: this.config['credentilas']['docker'],
                                      usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
             this.steps.stage("Login to docker") {
-                this.steps.sh "sudo docker logout && sudo docker login -u $USERNAME -p $PASSWORD"
+                this.steps.sh 'sudo docker logout && sudo docker login -u $USERNAME -p $PASSWORD'
             }
         }
     }
