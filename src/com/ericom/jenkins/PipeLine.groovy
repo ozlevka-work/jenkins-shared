@@ -105,7 +105,7 @@ class PipeLine implements Serializable {
     def runBuildChanged() {
         this.steps.stage('Build Images') {
             def build_array = makeDependencies()
-            for(i = 0; i < build_array.size(); i++) {
+            for(int i = 0; i < build_array.size(); i++) {
                 def buildPath = this.config['components'][build_array[i]]['path']
                 this.steps.sh "cd ${buildPath} && sudo ./_build.sh"
                 this.steps.echo "Component ${build_array[i]} succesfully build"
