@@ -44,7 +44,7 @@ class PipeLine implements Serializable {
         this.steps.withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: this.config['credentilas']['docker'],
                                      usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
             this.steps.stage("Login to docker") {
-                this.steps.sh 'sudo docker logout && sudo docker login -u $USERNAME -p $PASSWORD'
+                this.steps.sh 'docker logout && docker login -u $USERNAME -p $PASSWORD'
             }
         }
     }
@@ -144,7 +144,7 @@ class PipeLine implements Serializable {
             def build_array = makeDependencies()
             for(int i = 0; i < build_array.size(); i++) {
                 def buildPath = this.config['components'][build_array[i]]['path']
-                this.steps.sh "cd ${buildPath} && sudo ./_build.sh"
+                this.steps.sh "cd ${buildPath} && ./_build.sh"
                 this.steps.echo "Component ${build_array[i]} succesfully build"
             }
         }

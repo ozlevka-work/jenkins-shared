@@ -20,10 +20,10 @@ class TestFlow implements Serializable{
         for(int i = 0; i < this.config['test']['swarm']['files'].size(); i++) {
             def file = this.config['test']['swarm']['files'][i]
             def url = this.config['test']['swarm']['repo'] + '/' + file
-            this.steps.sh "sudo wget -O ${file} ${url}"
+            this.steps.sh "wget -O ${file} ${url}"
             if(file.endsWith('.sh')) {
                 this.runSystemScript = file
-                this.steps.sh "sudo chmod +x ${file}"
+                this.steps.sh "chmod +x ${file}"
             }
         }
 
@@ -35,7 +35,7 @@ class TestFlow implements Serializable{
         def stop = false
         while(!stop) {
             try {
-                result = this.steps.sh script:'(sudo docker swarm leave -f) 2>&1', returnStdout:true
+                result = this.steps.sh script:'(docker swarm leave -f) 2>&1', returnStdout:true
             } catch (AbortException e) {
                 this.steps.echo result
                 return
@@ -60,7 +60,7 @@ class TestFlow implements Serializable{
         }
 
         this.steps.stage("Setup system") {
-            this.steps.sh script:"sudo ./${this.runSystemScript}"
+            this.steps.sh script:"./${this.runSystemScript}"
         }
     }
 
