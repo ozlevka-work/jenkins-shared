@@ -145,7 +145,7 @@ class PipeLine implements Serializable {
                 this.containers_names << "${buildPath} by tag ${tag}-${env.BUILD_NUMBER}"
             }
 
-            echo "List of build containers: ${this.containers_names}"
+            this.steps.echo "List of build containers: ${this.containers_names}"
         }
     }
 
