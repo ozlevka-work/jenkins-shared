@@ -22,7 +22,7 @@ class TestFlow implements Serializable{
         for(int i = 0; i < this.config['test']['swarm']['files'].size(); i++) {
             def file = this.config['test']['swarm']['files'][i]
             def url = this.config['test']['swarm']['repo'] + '/' + file
-            this.steps.sh "wget -O ${file} ${url}"
+            this.steps.sh "curl ${url} > ${file}"
             if(file.endsWith('.sh')) {
                 this.runSystemScript = file
                 this.steps.sh "chmod +x ${file}"
