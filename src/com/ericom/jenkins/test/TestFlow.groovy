@@ -93,7 +93,7 @@ class TestFlow implements Serializable{
                     } catch (Exception e) {
                         this.steps.echo e.toString()
                     }
-                    sleep(this.config['test']['wait']['retries'].toInteger() * 1000)
+                    sleep(this.config['test']['wait']['sleep'].toInteger() * 1000)
                     counter++
                 }
 
