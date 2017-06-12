@@ -133,7 +133,7 @@ class PipeLine implements Serializable {
     def uploadContainersWithTag(candidate) {
         def tag = candidate
         if(tag == null) {
-            tag = startDate.format('yyMMdd-HH.mm')
+            tag = (new Date()).format('yyMMdd-HH.mm')
         }
         this.steps.stage('Push Images') {
             for(int i = 0; i < this.build_array.size(); i++) {
