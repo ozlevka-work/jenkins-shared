@@ -66,9 +66,10 @@ class PipeLine implements Serializable {
         for(int i = 0; i < this.config['test']['swarm']['files'].size(); i++) {
             def file = this.config['test']['swarm']['files'][i]
             def url = this.config['test']['swarm']['repo'] + '/' + file
-            def dFile = new File('./' + file).newOutputStream()
-            dFile << new URL(url).openStream()
-            dFile.close()
+            this.steps.sh "sudo wget -O ${file} ${url}"
+            if(file.endsWith('.sh')) {
+                this.steps.sh "sudo chmod +x ${file}"
+            }
         }
 
         this.steps.sh 'ls -al'
