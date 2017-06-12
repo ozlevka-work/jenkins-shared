@@ -72,6 +72,8 @@ class TestFlow implements Serializable{
                 try {
                     for (int i = 0; i < this.config['test']['urls'].size(); i++) {
                         def result = (new URL(this.config['test']['urls'][i]).text)
+
+                        this.steps.echo result
                     }
                     break
                 } catch (Exception e) {
@@ -84,6 +86,10 @@ class TestFlow implements Serializable{
                 this.steps.echo 'Maximum retries exceeded'
                 throw new Exception('Maximum retries exceeded')
             }
+        }
+
+        this.steps.stage("Clean Environment") {
+            this.tryToClearEnvironment()
         }
     }
 
