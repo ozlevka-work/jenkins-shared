@@ -56,7 +56,7 @@ class PipeLine implements Serializable {
         this.steps.stage('Send notifications') {
             def result = this.currentBuild.result
             if (result == null) {
-                echo "No changes found"
+                this.steps.echo "No changes found"
             } else {
 
                 if(result == "SUCCESS") {
