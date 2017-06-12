@@ -43,7 +43,7 @@ components:
       path: Containers/Docker/shield-icap
 
     elk:
-      path: Containers/Docker/shield-elk
+      path: Containers/Docker/shield-elastic
 
     broker:
       path: Containers/Docker/shield-broker
