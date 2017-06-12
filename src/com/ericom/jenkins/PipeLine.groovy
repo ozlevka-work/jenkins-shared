@@ -138,7 +138,7 @@ class PipeLine implements Serializable {
             tag = startDate.format('yyMMdd-HH.mm')
         }
         this.steps.stage('Push Images') {
-            for(i = 0; i < this.build_array.size(); i++) {
+            for(int i = 0; i < this.build_array.size(); i++) {
                 def buildPath = this.config['components'][this.build_array[i]]['path']
                 this.steps.sh "cd ${buildPath} && ./_upload.sh ${tag}-${env.BUILD_NUMBER}"
                 this.steps.echo "Param ${this.config['components'][this.build_array[i]]} upload success"
