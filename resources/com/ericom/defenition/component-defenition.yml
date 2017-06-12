@@ -58,3 +58,6 @@ test:
     files:
       - deploy-shield-dev.sh
       - docker-compose_swarm.yml
+  wait:
+    sleep: 10
+    retries: 10

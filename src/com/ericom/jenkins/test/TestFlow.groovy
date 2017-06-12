@@ -62,6 +62,29 @@ class TestFlow implements Serializable{
         this.steps.stage("Setup system") {
             this.steps.sh script:"./${this.runSystemScript}"
         }
+
+        this.steps.stage('Test System UP') {
+            int counter = 1
+            int max_retries = this.config['test']['wait']['retries']
+
+            while (counter <= max_retries) {
+                this.steps.echo "Going test system Retry: ${counter}"
+                try {
+                    for (int i = 0; i < this.config['test']['urls'].size(); i++) {
+                        def result = (new URL(this.config['test']['urls'][i]).text)
+                    }
+                    break
+                } catch (Exception e) {
+                    this.steps.echo e.toString()
+                }
+                counter++
+            }
+
+            if(counter > max_retries) {
+                this.steps.echo 'Maximum retries exceeded'
+                throw new Exception('Maximum retries exceeded')
+            }
+        }
     }
 
 }
