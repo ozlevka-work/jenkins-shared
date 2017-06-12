@@ -2,6 +2,7 @@ package com.ericom.jenkins.test
 
 import hudson.AbortException
 import java.net.Proxy
+import java.util.Scanner
 
 /**
  * Created by lev on 6/12/17.
@@ -29,6 +30,15 @@ class TestFlow implements Serializable{
         }
 
         this.steps.sh 'ls -al'
+    }
+
+    private streamToSring(InputStream input) {
+        def s = new Scanner(input);
+        def builder = new StringBuilder();
+        while (s.hasNextLine()) {
+            builder.append(s.nextLine() +"\n");
+        }
+        return builder.toString();
     }
 
     def tryToClearEnvironment() {
@@ -75,7 +85,7 @@ class TestFlow implements Serializable{
                         def proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(this.config['test']['proxy']['address'],this.config['test']['proxy']['port'].toInteger()))
                         for (int i = 0; i < this.config['test']['urls'].size(); i++) {
                             def url = new URL(this.config['test']['urls'][i]).openConnection(proxy)
-                            def result = url.text
+                            def result = streamToSring(url.getInputStream())
 
                             this.steps.echo result
                         }
