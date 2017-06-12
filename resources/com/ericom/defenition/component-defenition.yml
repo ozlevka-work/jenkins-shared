@@ -54,6 +54,9 @@ components:
     kibana:
       path: Containers/Docker/shield-kibana
 
+    collector:
+      path: Containers/Docker/shield-collector
+
     extproxy:
       path: Containers/Docker/shield-squid-ext
 
