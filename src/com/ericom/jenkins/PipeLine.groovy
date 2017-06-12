@@ -50,10 +50,10 @@ class PipeLine implements Serializable {
         def stop = false
         while(!stop) {
             try {
-                result = this.steps.sh script: 'sudo docker swarm leave -f'
+                result = this.steps.sh script: 'sudo docker swarm leave -f', returnStdout: true
             } catch (AbortException e) {
-                this.steps.echo e.getMessage()
-                stop = true
+                this.steps.echo result
+                return
             }
 
             stop = true
