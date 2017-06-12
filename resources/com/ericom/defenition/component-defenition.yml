@@ -10,7 +10,7 @@ notification:
 
 svc:
   url: 'https://github.com/EricomSoftwareLtd/SB.git'
-  branch: test
+  branch: master
 
 components:
     consul:
