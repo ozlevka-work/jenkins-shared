@@ -61,7 +61,7 @@ class PipeLine implements Serializable {
 
                 if(result == "SUCCESS") {
                     this.steps.emailext(
-                            to: emails.join(","),
+                            to: this.config['notification']['mails'].join(","),
                             subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                             body: """<p>SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
                                 <p>List of Containers built and pushed: ${containers}</p>
@@ -74,7 +74,7 @@ class PipeLine implements Serializable {
                     def errors = data["errors"]
                     def log = currentBuild.rawBuild.log.replaceAll(/\n/, '<br/>')
                     this.steps.emailext(
-                            to: emails.join(","),
+                            to: this.config['notification']['mails'].join(","),
                             subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                             body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
                                 <p>Errors: ${errors}</p>
