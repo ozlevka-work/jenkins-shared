@@ -1,5 +1,6 @@
 package com.ericom.jenkins
 
+import com.ericom.jenkins.test.TestFlow
 import hudson.AbortException
 @Grab(group = 'org.yaml', module='snakeyaml', version = "1.18")
 import org.yaml.snakeyaml.Yaml
@@ -29,13 +30,17 @@ class PipeLine implements Serializable {
     def run() {
         if (fetchChangesCodeChanges()) {
             runBuildChanged()
+            makeDockerLogin()
+            def test_flow = new TestFlow(this.steps, this.config)
+            test_flow.run()
         } else {
             this.steps.echo "No changes in code found"
         }
     }
 
 
-    def runWithCredentials() {
+
+    def makeDockerLogin() {
         this.steps.withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: this.config['credentilas']['docker'],
                                      usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
             this.steps.stage("Login to docker") {
@@ -45,36 +50,10 @@ class PipeLine implements Serializable {
     }
 
 
-    def tryToClearEnvironment() {
-        def result
-        def stop = false
-        while(!stop) {
-            try {
-                result = this.steps.sh script:'(sudo docker swarm leave -f) 2>&1', returnStdout:true
-            } catch (AbortException e) {
-                this.steps.echo result
-                return
-            }
-
-            stop = true
-        }
-
+    def runTestOnly() {
+        def test_flow = new TestFlow(this.steps, this.config)
+        test_flow.run()
     }
-
-
-    def downloadTestFiles() {
-        for(int i = 0; i < this.config['test']['swarm']['files'].size(); i++) {
-            def file = this.config['test']['swarm']['files'][i]
-            def url = this.config['test']['swarm']['repo'] + '/' + file
-            this.steps.sh "sudo wget -O ${file} ${url}"
-            if(file.endsWith('.sh')) {
-                this.steps.sh "sudo chmod +x ${file}"
-            }
-        }
-
-        this.steps.sh 'ls -al'
-    }
-
 
     def fetchChangesCodeChanges() {
         this.steps.stage("Fetch changes") {
