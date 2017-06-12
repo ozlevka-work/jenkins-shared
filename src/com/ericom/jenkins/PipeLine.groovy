@@ -14,12 +14,16 @@ class PipeLine implements Serializable {
     def steps
     def currentBuild
     def config
-
+    def current_tag
+    def build_array
     def changeset = [:]
+    def containers_names = []
+    def env
 
-    PipeLine(steps, current) {
+    PipeLine(steps, current, environment) {
         this.steps = steps
         this.currentBuild = current
+        this.env = environment
     }
 
     def loadConfig(String yml) {
@@ -28,17 +32,62 @@ class PipeLine implements Serializable {
     }
 
     def run() {
-        if (fetchChangesCodeChanges()) {
-            runBuildChanged()
-            makeDockerLogin()
-            def test_flow = new TestFlow(this.steps, this.config)
-            test_flow.run()
-        } else {
-            this.steps.echo "No changes in code found"
+        try {
+            if (fetchChangesCodeChanges()) {
+                runBuildChanged()
+                def test_flow = new TestFlow(this.steps, this.config)
+                test_flow.run()
+                makeDockerLogin()
+                uploadContainersWithTag()
+                this.currentBuild.result = 'SUCCESS'
+            } else {
+                this.steps.echo "No changes in code found"
+            }
+        } catch (Exception e) {
+            this.steps.echo e.toString()
+            this.currentBuild.result = 'FAILED'
+        } finally {
+            sendNotification()
         }
     }
 
 
+    def  sendNotification() {
+        this.steps.stage('Send notifications') {
+            def result = this.currentBuild.result
+            if (result == null) {
+                echo "No changes found"
+            } else {
+
+                if(result == "SUCCESS") {
+                    this.steps.emailext(
+                            to: emails.join(","),
+                            subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                            body: """<p>SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                                <p>List of Containers built and pushed: ${containers}</p>
+                                <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${
+                                env.BUILD_NUMBER
+                            }]</a>&QUOT;</p> """//,
+                            //recipientProviders: [[$class: 'RequesterRecipientProvider']]
+                    )
+                } else {
+                    def errors = data["errors"]
+                    def log = currentBuild.rawBuild.log.replaceAll(/\n/, '<br/>')
+                    this.steps.emailext(
+                            to: emails.join(","),
+                            subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                            body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                                <p>Errors: ${errors}</p>
+                                <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER
+                            }]</a>&QUOT;</p>""",
+                            attachLog: true,
+                            compressLog: true
+                    )
+                }
+
+            }
+        }
+    }
 
     def makeDockerLogin() {
         this.steps.withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: this.config['credentilas']['docker'],
@@ -80,6 +129,21 @@ class PipeLine implements Serializable {
         }
 
         return this.changeset.size() > 0
+    }
+
+
+    def uploadContainersWithTag() {
+        def tag = startDate.format('yyMMdd-HH.mm')
+        this.steps.stage('Push Images') {
+            for(i = 0; i < this.build_array.size(); i++) {
+                def buildPath = this.config['components'][this.build_array[i]]['path']
+                this.steps.sh "cd ${buildPath} && ./_upload.sh ${tag}-${env.BUILD_NUMBER}"
+                this.steps.echo "Param ${k} upload success"
+                this.containers_names << "${buildPath} by tag ${tag}-${env.BUILD_NUMBER}"
+            }
+
+            echo "List of build containers: ${this.containers_names}"
+        }
     }
 
 
@@ -141,11 +205,11 @@ class PipeLine implements Serializable {
 
     def runBuildChanged() {
         this.steps.stage('Build Images') {
-            def build_array = makeDependencies()
-            for(int i = 0; i < build_array.size(); i++) {
-                def buildPath = this.config['components'][build_array[i]]['path']
+            this.build_array = makeDependencies()
+            for(int i = 0; i < this.build_array.size(); i++) {
+                def buildPath = this.config['components'][this.build_array[i]]['path']
                 this.steps.sh "cd ${buildPath} && ./_build.sh"
-                this.steps.echo "Component ${build_array[i]} succesfully build"
+                this.steps.echo "Component ${this.build_array[i]} succesfully build"
             }
         }
     }

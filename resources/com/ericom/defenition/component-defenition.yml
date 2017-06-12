@@ -1,7 +1,12 @@
 
 credentilas:
-  git: ozlevka-github
-  docker: beny-docker-hub
+  git: 451bb7d7-5c99-4d21-aa3a-1c6a1027406b
+  docker: beny-docker
+
+notification:
+  mails:
+    - shield.build@ericom.com
+    - lev.ozeryansky@ericom.com
 
 svc:
   url: 'https://github.com/EricomSoftwareLtd/SB.git'
