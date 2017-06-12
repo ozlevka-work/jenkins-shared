@@ -64,7 +64,7 @@ class PipeLine implements Serializable {
                             to: this.config['notification']['mails'].join(","),
                             subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                             body: """<p>SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                                <p>List of Containers built and pushed: ${containers}</p>
+                                <p>List of Containers built and pushed: ${this.containers_names}</p>
                                 <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${
                                 env.BUILD_NUMBER
                             }]</a>&QUOT;</p> """//,
