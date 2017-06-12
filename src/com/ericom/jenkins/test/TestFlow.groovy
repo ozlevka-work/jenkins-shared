@@ -87,7 +87,9 @@ class TestFlow implements Serializable{
                             def url = new URL(this.config['test']['urls'][i]).openConnection(proxy)
                             def result = streamToSring(url.getInputStream())
 
-                            this.steps.echo result
+                            if(!result.contains('Protected by Ericom Shield')) {
+                                throw new Exception('Page is not AccessNow')
+                            }
                         }
                         break
                     } catch (Exception e) {
