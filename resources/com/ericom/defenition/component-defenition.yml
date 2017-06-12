@@ -54,6 +54,9 @@ components:
     kibana:
       path: Containers/Docker/shield-kibana
 
+    extproxy:
+      path: Containers/Docker/shield-squid-ext
+
 test:
   urls:
     - http://ericom.com
