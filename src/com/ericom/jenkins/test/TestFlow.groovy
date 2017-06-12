@@ -1,6 +1,7 @@
 package com.ericom.jenkins.test
 
 import hudson.AbortException
+import java.net.Proxy
 
 /**
  * Created by lev on 6/12/17.
@@ -70,8 +71,10 @@ class TestFlow implements Serializable{
             while (counter <= max_retries) {
                 this.steps.echo "Going test system Retry: ${counter}"
                 try {
+                    def proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(this.config['test']['proxy']['address'],this.config['test']['proxy']['address']))
                     for (int i = 0; i < this.config['test']['urls'].size(); i++) {
-                        def result = (new URL(this.config['test']['urls'][i]).text)
+                        def url = new URL(this.config['test']['urls'][i]).openConnection(proxy)
+                        def result = url.text
 
                         this.steps.echo result
                     }
