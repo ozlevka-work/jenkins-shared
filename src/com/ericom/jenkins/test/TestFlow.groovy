@@ -52,48 +52,53 @@ class TestFlow implements Serializable{
     }
 
     def run() {
-        this.steps.stage("Clean Environment") {
-            this.tryToClearEnvironment()
-        }
+        try {
+            this.steps.stage("Clean Environment") {
+                this.tryToClearEnvironment()
+            }
 
-        this.steps.stage("Prepare Test") {
-            this.downloadTestFiles()
-        }
+            this.steps.stage("Prepare Test") {
+                this.downloadTestFiles()
+            }
 
-        this.steps.stage("Setup system") {
-            this.steps.sh script:"./${this.runSystemScript}"
-        }
+            this.steps.stage("Setup system") {
+                this.steps.sh script:"./${this.runSystemScript}"
+            }
 
-        this.steps.stage('Test System UP') {
-            int counter = 1
-            int max_retries = this.config['test']['wait']['retries']
+            this.steps.stage('Test System UP') {
+                int counter = 1
+                int max_retries = this.config['test']['wait']['retries']
 
-            while (counter <= max_retries) {
-                this.steps.echo "Going test system Retry: ${counter}"
-                try {
-                    def proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(this.config['test']['proxy']['address'],this.config['test']['proxy']['address']))
-                    for (int i = 0; i < this.config['test']['urls'].size(); i++) {
-                        def url = new URL(this.config['test']['urls'][i]).openConnection(proxy)
-                        def result = url.text
+                while (counter <= max_retries) {
+                    this.steps.echo "Going test system Retry: ${counter}"
+                    try {
+                        def proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(this.config['test']['proxy']['address'],this.config['test']['proxy']['address'].toInteger()))
+                        for (int i = 0; i < this.config['test']['urls'].size(); i++) {
+                            def url = new URL(this.config['test']['urls'][i]).openConnection(proxy)
+                            def result = url.text
 
-                        this.steps.echo result
+                            this.steps.echo result
+                        }
+                        break
+                    } catch (Exception e) {
+                        this.steps.echo e.toString()
                     }
-                    break
-                } catch (Exception e) {
-                    this.steps.echo e.toString()
+                    sleep(this.config['test']['wait']['retries'].toInteger() * 1000)
+                    counter++
                 }
-                counter++
-            }
 
-            if(counter > max_retries) {
-                this.steps.echo 'Maximum retries exceeded'
-                throw new Exception('Maximum retries exceeded')
+                if(counter > max_retries) {
+                    this.steps.echo 'Maximum retries exceeded'
+                    throw new Exception('Maximum retries exceeded')
+                }
+            }
+        } finally {
+            this.steps.stage("Final Clean") {
+                this.tryToClearEnvironment()
             }
         }
 
-        this.steps.stage("Clean Environment") {
-            this.tryToClearEnvironment()
-        }
+
     }
 
 }
