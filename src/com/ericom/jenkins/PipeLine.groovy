@@ -1,4 +1,6 @@
 package com.ericom.jenkins
+
+import hudson.AbortException
 @Grab(group = 'org.yaml', module='snakeyaml', version = "1.18")
 import org.yaml.snakeyaml.Yaml
 
@@ -38,6 +40,19 @@ class PipeLine implements Serializable {
                                      usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
             this.steps.stage("Login to docker") {
                 this.steps.sh 'sudo docker logout && sudo docker login -u $USERNAME -p $PASSWORD'
+            }
+        }
+    }
+
+
+    def tryToClearEnvironment() {
+        def result
+        def stop = false
+        while(!stop) {
+            try {
+                result = this.steps.sh script: 'sudo docker swarm leave'
+            } catch (AbortException e) {
+                this.steps.echo e.getMessage()
             }
         }
     }
