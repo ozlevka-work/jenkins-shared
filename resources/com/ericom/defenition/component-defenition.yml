@@ -57,4 +57,4 @@ test:
     repo: https://raw.githubusercontent.com/ErezPasternak/Shield/master/Dev-Feb16
     files:
       - deploy-shield.sh
-      - deploy-shield_swarm.yml
+      - docker-compose_swarm.yml
