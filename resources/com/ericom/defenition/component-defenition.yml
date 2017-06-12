@@ -59,7 +59,7 @@ test:
       - deploy-shield-dev.sh
       - docker-compose_swarm.yml
   wait:
-    sleep: 10
+    sleep: 30
     retries: 10
   proxy:
     address: 127.0.0.1
