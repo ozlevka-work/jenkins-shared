@@ -71,13 +71,11 @@ class PipeLine implements Serializable {
                             //recipientProviders: [[$class: 'RequesterRecipientProvider']]
                     )
                 } else {
-                    def errors = data["errors"]
-                    def log = currentBuild.rawBuild.log.replaceAll(/\n/, '<br/>')
                     this.steps.emailext(
                             to: this.config['notification']['mails'].join(","),
                             subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                             body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                                <p>Errors: ${errors}</p>
+                                <p>Errors: See attached log</p>
                                 <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER
                             }]</a>&QUOT;</p>""",
                             attachLog: true,
