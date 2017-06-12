@@ -5,7 +5,7 @@ import hudson.AbortException
 /**
  * Created by lev on 6/12/17.
  */
-class TestFlow {
+class TestFlow implements Serializable{
     def steps
     def config
     def runSystemScript
