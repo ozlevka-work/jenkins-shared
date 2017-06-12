@@ -72,7 +72,7 @@ class TestFlow implements Serializable{
                 while (counter <= max_retries) {
                     this.steps.echo "Going test system Retry: ${counter}"
                     try {
-                        def proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(this.config['test']['proxy']['address'],this.config['test']['proxy']['address'].toInteger()))
+                        def proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(this.config['test']['proxy']['address'],this.config['test']['proxy']['port'].toInteger()))
                         for (int i = 0; i < this.config['test']['urls'].size(); i++) {
                             def url = new URL(this.config['test']['urls'][i]).openConnection(proxy)
                             def result = url.text
