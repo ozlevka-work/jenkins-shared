@@ -9,7 +9,7 @@ import org.yaml.snakeyaml.Yaml
 
 
 def testLoadConfig() {
-    def path = 'resources/com/ericom/defenition/component-defenition.yml'
+    def path = '/home/lev/projects/shared-library/resources/com/ericom/defenition/component-defenition.yml'
     def cofStr = (new File(path)).text
     def pl = new PipeLine(null, null)
 
@@ -67,14 +67,14 @@ def testContainsKey() {
 }
 
 
-def testChangesFinding() {
-
+def testDownloadFiles() {
+    def pl = testLoadConfig()
+    pl.downloadTestFiles()
 }
 
 
 
 testConfig()
-
-testContainsKey()
+testDownloadFiles()
 
 

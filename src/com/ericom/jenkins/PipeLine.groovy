@@ -50,7 +50,7 @@ class PipeLine implements Serializable {
         def stop = false
         while(!stop) {
             try {
-                result = this.steps.sh script:'(sudo docker swarm leave -f) 2>&1', returnStdout: true
+                result = this.steps.sh script:'(sudo docker swarm leave -f) 2>&1', returnStdout:true
             } catch (AbortException e) {
                 this.steps.echo result
                 return
@@ -59,6 +59,19 @@ class PipeLine implements Serializable {
             stop = true
         }
 
+    }
+
+
+    def downloadTestFiles() {
+        for(int i = 0; i < this.config['test']['swarm']['files'].size(); i++) {
+            def file = this.config['test']['swarm']['files'][i]
+            def url = this.config['test']['swarm']['repo'] + '/' + file
+            def dFile = new File('./' + file).newOutputStream()
+            dFile << new URL(url).openStream()
+            dFile.close()
+        }
+
+        this.steps.sh 'ls -al'
     }
 
 
