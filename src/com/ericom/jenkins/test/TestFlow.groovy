@@ -79,6 +79,7 @@ class TestFlow implements Serializable{
                 int counter = 1
                 int max_retries = this.config['test']['wait']['retries']
 
+                //TO DO test via script
                 while (counter <= max_retries) {
                     this.steps.echo "Going test system Retry: ${counter}"
                     try {
