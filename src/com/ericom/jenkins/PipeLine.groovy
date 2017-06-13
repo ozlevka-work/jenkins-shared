@@ -88,7 +88,7 @@ class PipeLine implements Serializable {
     }
 
     def makeDockerLogin() {
-        this.steps.withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: this.config['credentilas']['docker'],
+        this.steps.withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: this.config['credentials']['docker'],
                                      usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
             this.steps.stage("Login to docker") {
                 this.steps.sh 'docker logout && docker login -u $USERNAME -p $PASSWORD'
@@ -105,9 +105,9 @@ class PipeLine implements Serializable {
     def fetchChangesCodeChanges() {
         this.steps.stage("Fetch changes") {
             if (this.config["svc"].containsKey('branch')) {
-                this.steps.git([url: this.config['svc']['url'], credentialsId: this.config['credentilas']['git'], branch: this.config['svc']['branch'], changelog: true])
+                this.steps.git([url: this.config['svc']['url'], credentialsId: this.config['credentials']['git'], branch: this.config['svc']['branch'], changelog: true])
             } else {
-                this.steps.git([url: this.config['svc']['url'], credentialsId: this.config['credentilas']['git'], changelog: true])
+                this.steps.git([url: this.config['svc']['url'], credentialsId: this.config['credentials']['git'], changelog: true])
             }
 
             def changeLogSets = this.currentBuild.rawBuild.changeSets
