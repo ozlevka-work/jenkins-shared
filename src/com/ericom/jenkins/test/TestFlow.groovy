@@ -89,7 +89,7 @@ class TestFlow implements Serializable{
                             def result = streamToSring(url.getInputStream())
 
                             if(!result.contains('Protected by Ericom Shield')) {
-                                throw new Exception('Page is not AccessNow')
+                                throw new Exception(result + ' \n Page is not AccessNow')
                             }
                         }
                         break
