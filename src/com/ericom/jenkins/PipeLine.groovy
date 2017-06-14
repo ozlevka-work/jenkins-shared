@@ -75,6 +75,7 @@ class PipeLine implements Serializable {
                             to: this.config['notification']['mails'].join(","),
                             subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                             body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                                <p style='color:red; font-weight:bold;'> Components should have been in build: ${this.build_array} </p>
                                 <p>Errors: See attached log</p>
                                 <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER
                             }]</a>&QUOT;</p>""",

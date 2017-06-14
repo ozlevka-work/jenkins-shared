@@ -1,6 +1,11 @@
 @Grab(group = 'org.yaml', module='snakeyaml', version = "1.18")
 import com.ericom.jenkins.PipeLine
+import com.ericom.jenkins.test.TestBase
+import groovyx.gpars.GParsExecutorsPool
+import groovyx.gpars.group.DefaultPGroup
 import org.yaml.snakeyaml.Yaml
+
+import java.util.concurrent.ExecutorService
 
 
 /**
@@ -11,7 +16,7 @@ import org.yaml.snakeyaml.Yaml
 def testLoadConfig() {
     def path = '/home/lev/projects/shared-library/resources/com/ericom/defenition/component-defenition.yml'
     def cofStr = (new File(path)).text
-    def pl = new PipeLine(null, null)
+    def pl = new PipeLine(null, null, null)
 
     pl.loadConfig(cofStr)
     println pl.config
@@ -73,8 +78,21 @@ def testDownloadFiles() {
 }
 
 
+def runTestAsLoad() {
+    def pl = testLoadConfig()
+//    GParsExecutorsPool.withPool(5) { ExecutorService service ->
+//        service.submit(new TestBase(pl.config))
+//    }
 
-testConfig()
-testDownloadFiles()
+    def t = new TestBase(pl.config)
+    t.runTest()
+
+    def a = 'b'
+}
+
+
+runTestAsLoad()
+//testConfig()
+//testDownloadFiles()
 
 
