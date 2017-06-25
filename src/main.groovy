@@ -72,6 +72,20 @@ def testContainsKey() {
 }
 
 
+def testFindHelathy() {
+    def bad = "ababac7434e3        securebrowsing/proxy-server:latest           \"/init\"                  About a minute ago   Up About a minute (health: starting)   53/tcp, 3128/tcp, 53/udp, 8300-8302/tcp, 8400/tcp, 8500/tcp, 8301-8302/udp   shield_proxy-server.1.17jxqqdnns2twoylu39mwzttp"
+    def good = "ababac7434e3        securebrowsing/proxy-server:latest           \"/init\"                  About a minute ago   Up About a minute (healthy)   53/tcp, 3128/tcp, 53/udp, 8300-8302/tcp, 8400/tcp, 8500/tcp, 8301-8302/udp   shield_proxy-server.1.17jxqqdnns2twoylu39mwzttp"
+
+    if (bad.contains("healthy")) {
+        println("Not good")
+    }
+
+    if (good.contains("healthy")) {
+        println("Is good");
+    }
+}
+
+
 def testDownloadFiles() {
     def pl = testLoadConfig()
     pl.downloadTestFiles()
@@ -91,7 +105,8 @@ def runTestAsLoad() {
 }
 
 
-runTestAsLoad()
+//runTestAsLoad()
+testFindHelathy()
 //testConfig()
 //testDownloadFiles()
 

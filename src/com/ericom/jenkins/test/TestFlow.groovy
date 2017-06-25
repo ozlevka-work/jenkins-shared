@@ -84,6 +84,10 @@ class TestFlow implements Serializable{
                     try {
                         def res = this.steps.sh script: 'docker ps | grep proxy', returnStdout: true
                         this.steps.echo res
+
+                        if(res.contains('healthy')) {
+                            break;
+                        }
                     } catch (Exception ex) {
                         this.steps.echo ex.toString()
                     }
