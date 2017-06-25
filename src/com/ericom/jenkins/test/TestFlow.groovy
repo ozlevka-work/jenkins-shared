@@ -76,8 +76,25 @@ class TestFlow implements Serializable{
             }
 
             this.steps.stage("Wait to system ready") {
-                 def res = this.steps.sh script:'docker ps | grep proxy', returnStdout: true
-                 this.steps.echo res
+                int counter = 1
+                int max_retries = this.config['test']['wait']['retries']
+
+                while(counter <= max_retries) {
+                    this.steps.echo "Going to check system ready in ${counter} retry"
+                    try {
+                        def res = this.steps.sh script: 'docker ps | grep proxy', returnStdout: true
+                        this.steps.echo res
+                    } catch (Exception ex) {
+                        this.steps.echo ex.toString()
+                    }
+                    sleep(this.config['test']['wait']['sleep'].toInteger() * 1000)
+                    counter++
+                }
+
+                if(counter > max_retries) {
+                    this.steps.echo 'Maximum retries exceeded'
+                    throw new Exception('Maximum retries exceeded')
+                }
             }
 
             this.steps.stage('Test System UP') {
