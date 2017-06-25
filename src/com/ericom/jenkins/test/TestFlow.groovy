@@ -75,6 +75,11 @@ class TestFlow implements Serializable{
                 this.steps.sh script:"./${this.runSystemScript}"
             }
 
+            this.steps.stage("Wait to system ready") {
+                 def res = this.steps.sh script:'docker ps | grep proxy', returnStdout: true
+                 this.steps.echo res
+            }
+
             this.steps.stage('Test System UP') {
                 int counter = 1
                 int max_retries = this.config['test']['wait']['retries']
