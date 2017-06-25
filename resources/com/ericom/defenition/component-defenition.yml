@@ -73,5 +73,5 @@ test:
     sleep: 40
     retries: 10
   proxy:
-    address: 127.0.0.1
+    address: 126.0.1.140
     port: 3128
