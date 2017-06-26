@@ -1,0 +1,12 @@
+@Library('main-shared-library')
+import com.ericom.jenkins.PipeLine
+
+def pl = new PipeLine(steps, currentBuild, env)
+def lib = libraryResource "com/ericom/defenition/component-defenition.yml"
+pl.loadConfig(lib)
+node {
+    env.PATH = "/sbin:${env.PATH}"
+    env.IP_ADDRESS = '126.0.1.140'
+    echo 'Start'
+    pl.run()
+}
