@@ -43,16 +43,13 @@ components:
       path: Containers/Docker/shield-icap
 
     elk:
-      path: Containers/Docker/shield-elastic
+      path: Containers/Docker/shield-elk
 
     broker:
       path: Containers/Docker/shield-broker
 
     portainer:
       path: Containers/Docker/shield-portainer
-
-    kibana:
-      path: Containers/Docker/shield-kibana
 
     collector:
       path: Containers/Docker/shield-collector
