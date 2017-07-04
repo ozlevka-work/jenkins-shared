@@ -51,6 +51,22 @@ class PipeLine implements Serializable {
         }
     }
 
+    def rebuild() {
+        try {
+            runBuildChanged()
+            def test_flow = new TestFlow(this.steps, this.config)
+            test_flow.run()
+            makeDockerLogin()
+            uploadContainersWithTag(null)
+            this.currentBuild.result = 'SUCCESS'
+        } catch (Exception e) {
+            this.steps.echo e.toString()
+            this.currentBuild.result = 'FAILED'
+        } finally {
+            sendNotification()
+        }
+    }
+
 
     def  sendNotification() {
         this.steps.stage('Send notifications') {
