@@ -53,6 +53,12 @@ class PipeLine implements Serializable {
 
     def rebuild(key) {
         this.changeset[key] = true;
+        if (this.config["svc"].containsKey('branch')) {
+            this.steps.git([url: this.config['svc']['url'], credentialsId: this.config['credentials']['git'], branch: this.config['svc']['branch'], changelog: true])
+        } else {
+            this.steps.git([url: this.config['svc']['url'], credentialsId: this.config['credentials']['git'], changelog: true])
+        }
+
         try {
             runBuildChanged()
             def test_flow = new TestFlow(this.steps, this.config)
