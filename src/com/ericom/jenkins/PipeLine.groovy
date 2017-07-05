@@ -51,7 +51,8 @@ class PipeLine implements Serializable {
         }
     }
 
-    def rebuild() {
+    def rebuild(key) {
+        this.changeset[key] = true;
         try {
             runBuildChanged()
             def test_flow = new TestFlow(this.steps, this.config)
@@ -219,6 +220,7 @@ class PipeLine implements Serializable {
             collection.remove(indexes[i])
         }
     }
+
 
 
     def runBuildChanged() {
