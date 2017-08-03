@@ -57,6 +57,9 @@ components:
     extproxy:
       path: Containers/Docker/shield-squid-ext
 
+    shield-cleaner:
+      path: Containers/Docker/shield-cleaner
+
 test:
   urls:
     - http://ericom.com
