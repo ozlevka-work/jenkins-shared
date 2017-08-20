@@ -67,7 +67,7 @@ test:
   swarm:
     repo: https://raw.githubusercontent.com/ErezPasternak/Shield/master/Dev-Feb16
     files:
-      - deploy-shield-dev.sh
+      - deploy-shield-jenkins.sh
       - docker-compose_swarm.yml
   wait:
     sleep: 40
