@@ -76,29 +76,7 @@ class TestFlow implements Serializable{
             }
 
             this.steps.stage("Wait to system ready") {
-                int counter = 1
-                int max_retries = this.config['test']['wait']['retries']
-
-                while(counter <= max_retries) {
-                    this.steps.echo "Going to check system ready in ${counter} retry"
-                    try {
-                        def res = this.steps.sh script: 'docker ps | grep proxy', returnStdout: true
-                        this.steps.echo res
-
-                        if(res.contains('healthy')) {
-                            break;
-                        }
-                    } catch (Exception ex) {
-                        this.steps.echo ex.toString()
-                    }
-                    sleep(this.config['test']['wait']['sleep'].toInteger() * 1000)
-                    counter++
-                }
-
-                if(counter > max_retries) {
-                    this.steps.echo 'Maximum retries exceeded'
-                    throw new Exception('Maximum retries exceeded')
-                }
+                waitForSystemHealthy()
             }
 
             this.steps.stage('Test System UP') {
@@ -140,6 +118,32 @@ class TestFlow implements Serializable{
 
     }
 
+    private void waitForSystemHealthy() {
+        int counter = 1
+        int max_retries = this.config['test']['wait']['retries']
+
+        while (counter <= max_retries) {
+            this.steps.echo "Going to check system ready in ${counter} retry"
+            try {
+                def res = this.steps.sh script: 'docker ps | grep proxy', returnStdout: true
+                this.steps.echo res
+
+                if (res.contains('healthy')) {
+                    break;
+                }
+            } catch (Exception ex) {
+                this.steps.echo ex.toString()
+            }
+            sleep(this.config['test']['wait']['sleep'].toInteger() * 1000)
+            counter++
+        }
+
+        if (counter > max_retries) {
+            this.steps.echo 'Maximum retries exceeded'
+            throw new Exception('Maximum retries exceeded')
+        }
+    }
+
     def run_npm_tests() {
         this.steps.stage("Clean Environment") {
             this.tryToClearEnvironment()
@@ -155,6 +159,10 @@ class TestFlow implements Serializable{
 
         this.steps.stage("Compile test container") {
             this.steps.sh "cd Containers/Docker/shield-virtual-client && ./_build.sh"
+        }
+
+        this.steps.stage("Wait to system ready") {
+            waitForSystemHealthy()
         }
 
         this.steps.stage("Run compiled test") {
