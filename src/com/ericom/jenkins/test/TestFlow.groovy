@@ -170,7 +170,7 @@ class TestFlow implements Serializable{
         }
 
         this.steps.stage("Read report from") {
-            this.steps.junit './report.xml'
+            this.steps.junit '/var/jenkins_home/report.xml'
         }
     }
 }
