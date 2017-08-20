@@ -11,6 +11,7 @@ class TestFlow implements Serializable{
     def steps
     def config
     def runSystemScript
+    def env
 
     TestFlow(steps, config, envinronment) {
         this.steps = steps
