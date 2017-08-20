@@ -35,7 +35,7 @@ class PipeLine implements Serializable {
         try {
             if (fetchChangesCodeChanges()) {
                 runBuildChanged()
-                def test_flow = new TestFlow(this.steps, this.config)
+                def test_flow = new TestFlow(this.steps, this.config, this.env)
                 test_flow.run()
                 makeDockerLogin()
                 uploadContainersWithTag(null)
