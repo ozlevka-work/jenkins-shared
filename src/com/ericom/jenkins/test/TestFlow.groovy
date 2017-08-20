@@ -171,8 +171,8 @@ class TestFlow implements Serializable{
             this.steps.sh 'docker run --network host -t -v /home/lev/tmp/jenkins/home/workspace/test-1-2:/reports node-test'
         }
 
-        this.steps.stage("Publish report") {
-            this.steps.publishHTML reportDir:'report', reportName:"Test Report ${env.BUILD_NUMBER}"
-        }
+//        this.steps.stage("Publish report") {
+//            this.steps.publishHTML reportDir:'report', reportName:"Test Report ${env.BUILD_NUMBER}"
+//        }
     }
 }
