@@ -156,5 +156,9 @@ class TestFlow implements Serializable{
         this.steps.stage("Compile test container") {
             this.steps.sh "cd Containers/Docker/shield-virtual-client && ./_build.sh"
         }
+
+        this.steps.stage("Run compiled test") {
+            this.steps.sh "docker run --network host -t -v $PWD:/reports node-test"
+        }
     }
 }
