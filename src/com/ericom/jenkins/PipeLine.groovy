@@ -77,7 +77,7 @@ class PipeLine implements Serializable {
     }
 
 
-    def  sendNotification() {
+    def sendNotification() {
         this.steps.stage('Send notifications') {
             def result = this.currentBuild.result
             if (result == null) {
@@ -128,6 +128,11 @@ class PipeLine implements Serializable {
         test_flow.run()
     }
 
+    def runNpmTests() {
+        def test_flow = new TestFlow(this.steps, this.config)
+        test_flow.run_npm_tests()
+    }
+
     def fetchChangesCodeChanges() {
         this.steps.stage("Fetch changes") {
             if (this.config["svc"].containsKey('branch')) {
@@ -172,21 +177,6 @@ class PipeLine implements Serializable {
             this.steps.echo "List of build containers: ${this.containers_names}"
         }
     }
-
-
-//    def makeChangeset(changeLogSets) {
-//        for (int i = 0; i < changeLogSets.size(); i++) {
-//            def entries = changeLogSets[i].items
-//            for (int j = 0; j < entries.length; j++) {
-//                def entry = entries[j]
-//                def files = new ArrayList(entry.affectedFiles)
-//                for (int k = 0; k < files.size(); k++) {
-//                    def file = files[k]
-//                    this.findComponent(file.path)
-//                }
-//            }
-//        }
-//    }
 
     def findComponent(String path) {
         def lst = this.config['components'].keySet() as List

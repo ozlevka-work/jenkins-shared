@@ -140,4 +140,21 @@ class TestFlow implements Serializable{
 
     }
 
+    def run_npm_tests() {
+        this.steps.stage("Clean Environment") {
+            this.tryToClearEnvironment()
+        }
+
+        this.steps.stage("Prepare Test") {
+            this.downloadTestFiles()
+        }
+
+        this.steps.stage("Setup system") {
+            this.steps.sh script:"./${this.runSystemScript}"
+        }
+
+        this.steps.stage("Compile test container") {
+            this.steps.sh "cd Containers/Docker/shield-virtual-client && ./_build.sh"
+        }
+    }
 }
