@@ -12,9 +12,10 @@ class TestFlow implements Serializable{
     def config
     def runSystemScript
 
-    TestFlow(steps, config) {
+    TestFlow(steps, config, envinronment) {
         this.steps = steps
         this.config = config
+        this.env = envinronment
     }
 
 
@@ -170,7 +171,7 @@ class TestFlow implements Serializable{
         }
 
         this.steps.stage("Publish report") {
-            this.steps.publishHTML reportDir:'test-1-2/report'
+            this.steps.publishHTML reportDir:'test-1-2/report', reportName:"Test Report ${env.BUILD_NUMBER}"
         }
     }
 }

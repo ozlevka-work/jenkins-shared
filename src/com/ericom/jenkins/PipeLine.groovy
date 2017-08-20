@@ -124,12 +124,12 @@ class PipeLine implements Serializable {
 
 
     def runTestOnly() {
-        def test_flow = new TestFlow(this.steps, this.config)
+        def test_flow = new TestFlow(this.steps, this.config, this.env)
         test_flow.run()
     }
 
     def runNpmTests() {
-        def test_flow = new TestFlow(this.steps, this.config)
+        def test_flow = new TestFlow(this.steps, this.config, this.env)
         test_flow.run_npm_tests()
     }
 
