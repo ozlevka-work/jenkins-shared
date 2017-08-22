@@ -57,18 +57,22 @@ components:
     extproxy:
       path: Containers/Docker/shield-squid-ext
 
-    shield-cleaner:
-      path: Containers/Docker/shield-cleaner
+    shield-cdr-controller:
+      path: Containers/Docker/shield-cdr-controller
+
+    shield-cdr-dispatcher:
+      path: Containers/Docker/shield-cdr-dispatcher
 
 test:
   urls:
     - http://ericom.com
     - http://ynet.co.il
   swarm:
-    repo: https://raw.githubusercontent.com/ErezPasternak/Shield/master/Dev-Feb16
+    repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/master/Setup
     files:
-      - deploy-shield-jenkins.sh
-      - docker-compose_swarm.yml
+      - deployshield-dev.sh
+      - docker-compose_dev.yml
+
   wait:
     sleep: 40
     retries: 10
