@@ -167,7 +167,7 @@ class TestFlow implements Serializable{
             waitForSystemHealthy()
         }
 
-        this.steps.stage("Run compiled test") {
+        this.steps.stage("Run npm test") {
             this.steps.sh 'docker run --network host -t -v /home/lev/tmp/jenkins/home/workspace/test-1-2:/reports node-test'
         }
 
