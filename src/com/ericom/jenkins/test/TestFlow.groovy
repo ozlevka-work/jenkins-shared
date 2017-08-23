@@ -11,10 +11,12 @@ class TestFlow implements Serializable{
     def steps
     def config
     def runSystemScript
+    def env
 
-    TestFlow(steps, config) {
+    TestFlow(steps, config, envinronment) {
         this.steps = steps
         this.config = config
+        this.env = envinronment
     }
 
 
@@ -76,29 +78,7 @@ class TestFlow implements Serializable{
             }
 
             this.steps.stage("Wait to system ready") {
-                int counter = 1
-                int max_retries = this.config['test']['wait']['retries']
-
-                while(counter <= max_retries) {
-                    this.steps.echo "Going to check system ready in ${counter} retry"
-                    try {
-                        def res = this.steps.sh script: 'docker ps | grep proxy', returnStdout: true
-                        this.steps.echo res
-
-                        if(res.contains('healthy')) {
-                            break;
-                        }
-                    } catch (Exception ex) {
-                        this.steps.echo ex.toString()
-                    }
-                    sleep(this.config['test']['wait']['sleep'].toInteger() * 1000)
-                    counter++
-                }
-
-                if(counter > max_retries) {
-                    this.steps.echo 'Maximum retries exceeded'
-                    throw new Exception('Maximum retries exceeded')
-                }
+                waitForSystemHealthy()
             }
 
             this.steps.stage('Test System UP') {
@@ -140,4 +120,65 @@ class TestFlow implements Serializable{
 
     }
 
+    private void waitForSystemHealthy() {
+        int counter = 1
+        int max_retries = this.config['test']['wait']['retries']
+
+        while (counter <= max_retries) {
+            this.steps.echo "Going to check system ready in ${counter} retry"
+            try {
+                def res = this.steps.sh script: 'docker ps | grep proxy', returnStdout: true
+                this.steps.echo res
+
+                if (res.contains('healthy')) {
+                    break;
+                }
+            } catch (Exception ex) {
+                this.steps.echo ex.toString()
+            }
+            sleep(this.config['test']['wait']['sleep'].toInteger() * 1000)
+            counter++
+        }
+
+        if (counter > max_retries) {
+            this.steps.echo 'Maximum retries exceeded'
+            throw new Exception('Maximum retries exceeded')
+        }
+    }
+
+    def run_npm_tests() {
+        this.steps.stage("Clean Environment") {
+            this.tryToClearEnvironment()
+        }
+
+        try {
+            this.steps.stage("Prepare Test") {
+                this.downloadTestFiles()
+            }
+
+            this.steps.stage("Setup system") {
+                this.steps.sh script:"./${this.runSystemScript}"
+            }
+
+            this.steps.stage("Compile test container") {
+                this.steps.sh "cd Containers/Docker/shield-virtual-client && ./_build.sh"
+            }
+
+            this.steps.stage("Wait to system ready") {
+                waitForSystemHealthy()
+            }
+
+            this.steps.stage("Run npm test") {
+                this.steps.sh 'docker run --network host -t -v $TEST_HOME:/reports node-test'
+            }
+
+            this.steps.stage("Publish report") {
+                this.steps.publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'report', reportFiles: 'mochawesome.html', reportName: "Tests Running  Report for Build ${env.BUILD_NUMBER}", reportTitles: ''])
+            }
+        } finally {
+            this.steps.stage("Final Clean") {
+                this.tryToClearEnvironment()
+            }
+        }
+    }
 }
