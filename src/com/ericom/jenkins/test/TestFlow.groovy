@@ -151,28 +151,34 @@ class TestFlow implements Serializable{
             this.tryToClearEnvironment()
         }
 
-        this.steps.stage("Prepare Test") {
-            this.downloadTestFiles()
-        }
+        try {
+            this.steps.stage("Prepare Test") {
+                this.downloadTestFiles()
+            }
 
-        this.steps.stage("Setup system") {
-            this.steps.sh script:"./${this.runSystemScript}"
-        }
+            this.steps.stage("Setup system") {
+                this.steps.sh script:"./${this.runSystemScript}"
+            }
 
-        this.steps.stage("Compile test container") {
-            this.steps.sh "cd Containers/Docker/shield-virtual-client && ./_build.sh"
-        }
+            this.steps.stage("Compile test container") {
+                this.steps.sh "cd Containers/Docker/shield-virtual-client && ./_build.sh"
+            }
 
-        this.steps.stage("Wait to system ready") {
-            waitForSystemHealthy()
-        }
+            this.steps.stage("Wait to system ready") {
+                waitForSystemHealthy()
+            }
 
-        this.steps.stage("Run npm test") {
-            this.steps.sh 'docker run --network host -t -v $TEST_HOME:/reports node-test'
-        }
+            this.steps.stage("Run npm test") {
+                this.steps.sh 'docker run --network host -t -v $TEST_HOME:/reports node-test'
+            }
 
-        this.steps.stage("Publish report") {
-            this.steps.publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'report', reportFiles: 'mochawesome.html', reportName: "Tests Running  Report for Build ${env.BUILD_NUMBER}", reportTitles: ''])
+            this.steps.stage("Publish report") {
+                this.steps.publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'report', reportFiles: 'mochawesome.html', reportName: "Tests Running  Report for Build ${env.BUILD_NUMBER}", reportTitles: ''])
+            }
+        } finally {
+            this.steps.stage("Final Clean") {
+                this.tryToClearEnvironment()
+            }
         }
     }
 }
