@@ -172,7 +172,7 @@ class TestFlow implements Serializable{
         }
 
         this.steps.stage("Publish report") {
-            this.steps.publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'test-1-2/report', reportFiles: 'mochawesome.html', reportName: "Tests Running  Report for Build ${env.BUILD_NUMBER}", reportTitles: ''])
+            this.steps.publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'report', reportFiles: 'mochawesome.html', reportName: "Tests Running  Report for Build ${env.BUILD_NUMBER}", reportTitles: ''])
         }
     }
 }
