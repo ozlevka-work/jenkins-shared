@@ -1,6 +1,6 @@
 
 credentials:
-  git: ozlevka-github
+  git: 451bb7d7-5c99-4d21-aa3a-1c6a1027406b
   docker: beny-docker
 
 notification:
@@ -10,7 +10,7 @@ notification:
 
 svc:
   url: 'https://github.com/EricomSoftwareLtd/SB.git'
-  branch: test-client
+  branch: master
 
 components:
     consul:
@@ -70,7 +70,7 @@ test:
   swarm:
     repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/jenkins/Setup
     files:
-      - deploy-shield-jenkins.sh
+      - deployshield-dev.sh
       - docker-compose_dev.yml
 
   wait:
