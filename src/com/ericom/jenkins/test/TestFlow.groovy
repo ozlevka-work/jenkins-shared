@@ -171,8 +171,8 @@ class TestFlow implements Serializable{
             this.steps.sh 'docker run --network host -t -v $TEST_HOME:/reports node-test'
         }
 
-//        this.steps.stage("Publish report") {
-//            this.steps.publishHTML reportDir:'report', reportName:"Test Report ${env.BUILD_NUMBER}"
-//        }
+        this.steps.stage("Publish report") {
+            this.steps.publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'test-1-2/report', reportFiles: 'mochawesome.html', reportName: "Tests Running  Report for Build ${env.BUILD_NUMBER}", reportTitles: ''])
+        }
     }
 }
