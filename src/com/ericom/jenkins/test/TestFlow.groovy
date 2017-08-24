@@ -169,7 +169,7 @@ class TestFlow implements Serializable{
             }
 
             this.steps.stage("Run npm test") {
-                this.steps.sh 'docker run --network host -t -v $TEST_HOME:/reports node-test'
+                this.steps.sh 'docker run --rm --network host -t -v $TEST_HOME:/reports node-test'
             }
 
             this.steps.stage("Publish report") {
