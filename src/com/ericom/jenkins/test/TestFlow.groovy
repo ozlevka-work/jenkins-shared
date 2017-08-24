@@ -171,11 +171,11 @@ class TestFlow implements Serializable{
             this.steps.stage("Run npm test") {
                 this.steps.sh 'docker run --rm --network host -t -v $TEST_HOME:/reports node-test'
             }
-
+        } finally {
             this.steps.stage("Publish report") {
                 this.steps.publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'report', reportFiles: 'mochawesome.html', reportName: "Tests Running  Report for Build ${env.BUILD_NUMBER}", reportTitles: ''])
             }
-        } finally {
+
             this.steps.stage("Final Clean") {
                 this.tryToClearEnvironment()
             }
