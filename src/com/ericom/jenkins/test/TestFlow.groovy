@@ -48,7 +48,7 @@ class TestFlow implements Serializable{
         def stop = false
         while(!stop) {
             try {
-                result = this.steps.sh script:'(docker swarm leave -f && docker system prune -f) 2>&1', returnStdout:true
+                result = this.steps.sh script:'(docker swarm leave -f) 2>&1', returnStdout:true
             } catch (AbortException e) {
                 this.steps.echo result
                 return
