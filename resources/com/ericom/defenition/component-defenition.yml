@@ -63,6 +63,9 @@ components:
     shield-cdr-dispatcher:
       path: Containers/Docker/shield-cdr-dispatcher
 
+    shield-web-service:
+      path: Containers/Docker/shield-web-service
+
 test:
   urls:
     - http://ericom.com
