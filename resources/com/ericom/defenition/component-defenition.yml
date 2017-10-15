@@ -66,6 +66,12 @@ components:
     shield-web-service:
       path: Containers/Docker/shield-web-service
 
+    shield-maintenance:
+      path: Containers/Docker/shield-maintenance
+
+    shield-authproxy:
+      path: Containers/Docker/shield-authproxy
+
 test:
   urls:
     - http://ericom.com
@@ -79,6 +85,3 @@ test:
   wait:
     sleep: 40
     retries: 10
-  proxy:
-    address: 126.0.1.140
-    port: 3128
