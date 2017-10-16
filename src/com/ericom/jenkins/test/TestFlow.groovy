@@ -157,7 +157,7 @@ class TestFlow implements Serializable{
             }
 
             this.steps.stage("Setup system") {
-                this.steps.sh script:"./${this.runSystemScript}"
+                this.steps.sh script:"./${this.runSystemScript} -j"
             }
 
             this.steps.stage("Compile test container") {
