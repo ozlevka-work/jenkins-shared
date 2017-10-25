@@ -127,10 +127,24 @@ class TestFlow implements Serializable{
         while (counter <= max_retries) {
             this.steps.echo "Going to check system ready in ${counter} retry"
             try {
-                def res = this.steps.sh script: 'docker ps | grep proxy', returnStdout: true
+                def result = 0;
+                def res = this.steps.sh script: 'docker ps | grep proxy-server', returnStdout: true
                 this.steps.echo res
 
                 if (res.contains('healthy')) {
+                    this.steps.echo 'proxy-server is healthy'
+                    result += 1
+                }
+
+                res = this.steps.sh script: 'docker ps | grep shield-authproxy', returnStdout: true
+                this.steps.echo res
+
+                if (res.contains('healthy')) {
+                    this.steps.echo 'shield-authproxy is healthy'
+                    result += 1
+                }
+
+                if (result >= 2) {
                     break;
                 }
             } catch (Exception ex) {
