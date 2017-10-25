@@ -69,8 +69,8 @@ components:
     shield-maintenance:
       path: Containers/Docker/shield-maintenance
 
-    shield-authproxy:
-      path: Containers/Docker/shield-authproxy
+    shield-squid-auth:
+      path: Containers/Docker/shield-squid-auth
 
 test:
   urls:
