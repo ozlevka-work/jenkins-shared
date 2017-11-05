@@ -19,9 +19,6 @@ components:
     admin:
       path: Containers/Docker/shield-admin
 
-    consul-admin:
-      path: Containers/Docker/shield-admin-orig
-
     ubuntu:
       path: Containers/Docker/secure-remote-browser-ubuntu-base
       dependency:
