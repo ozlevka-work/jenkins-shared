@@ -28,7 +28,7 @@ class ConsulTestPipeline extends PipelineBase{
     }
 
     def run() {
-        def tst = new TestFlow()
+        def tst = new TestFlow(this.steps, this.config, this.env)
         this.steps.stage('Clean environment') {
             tst.tryToClearEnvironment()
         }
