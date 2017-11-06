@@ -27,6 +27,12 @@ class ConsulTestPipeline extends PipelineBase{
     def createNewTag() {
         def yaml = new Yaml()
         this.consul_run_config = yaml.load(new FileReader("${this.env.PWD}/${this.config['files']['yaml']}"))
+        this.steps.sh "docker tag ${this.prepareImageToTag()}"
+    }
+
+    def prepareImageToTag() {
+        def arr = this.consul_run_config["services"]["consul-server"]["image"].split(':')
+        return "${arr[0]}:${arr[1]} ${arr[0]}:jenkins-test"
     }
 
     def run() {
@@ -38,8 +44,10 @@ class ConsulTestPipeline extends PipelineBase{
         this.steps.stage('Setup consul') {
             this.downloadYamlFile()
             this.runSystem()
+        }
+
+        this.steps.stage("Make test requirements") {
             this.createNewTag()
-            this.steps.echo this.consul_run_config["services"]["consul-server"]["image"]
         }
     }
 }
