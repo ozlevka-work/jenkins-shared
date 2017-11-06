@@ -12,9 +12,7 @@ class ConsulTestPipeline extends PipelineBase{
     }
 
     def downloadYamlFile() {
-        def yaml = new Yaml()
         this.steps.sh "wget ${this.config['files']['branchUrl']}${this.config['files']['yaml']}"
-        this.consul_run_config = yaml.load("./${this.config['files']['yaml']}")
     }
 
     def runSystem() {
@@ -23,13 +21,15 @@ class ConsulTestPipeline extends PipelineBase{
     }
 
     def createNewTag() {
-
+        def yaml = new Yaml()
+        this.consul_run_config = yaml.load("./${this.config['files']['yaml']}")
     }
 
     def run() {
         this.steps.stage('Setup consul') {
             this.downloadYamlFile()
             this.runSystem()
+            this.createNewTag()
             this.steps.echo this.consul_run_config["services"]["consul-server"]["image"]
         }
     }
