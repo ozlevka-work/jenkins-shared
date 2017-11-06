@@ -14,7 +14,7 @@ class ConsulTestPipeline extends PipelineBase{
     }
 
     def downloadYamlFile() {
-        this.steps.sh "wget ${this.config['files']['branchUrl']}${this.config['files']['yaml']}"
+        this.steps.sh "wget -O ${this.config['files']['yaml']} ${this.config['files']['branchUrl']}${this.config['files']['yaml']}"
     }
 
     def runSystem() {
