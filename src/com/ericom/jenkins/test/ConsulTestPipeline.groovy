@@ -26,6 +26,11 @@ class ConsulTestPipeline extends PipelineBase{
     }
 
     def run() {
+        def tst = new TestFlow()
+        this.steps.stage('Clean environment') {
+            tst.tryToClearEnvironment()
+        }
+
         this.steps.stage('Setup consul') {
             this.downloadYamlFile()
             this.runSystem()
