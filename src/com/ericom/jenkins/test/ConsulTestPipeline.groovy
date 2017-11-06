@@ -1,5 +1,7 @@
 package com.ericom.jenkins.test
 import com.ericom.jenkins.PipelineBase
+import com.ericom.jenkins.test.TestFlow
+
 
 @Grab(group = 'org.yaml', module='snakeyaml', version = "1.18")
 import org.yaml.snakeyaml.Yaml
