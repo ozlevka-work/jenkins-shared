@@ -24,10 +24,9 @@ class ConsulTestPipeline extends PipelineBase{
         this.steps.sh "docker stack deploy -c ./${this.config['files']['yaml']} shield"
     }
 
-    def createNewTag() {
+    def readSwarmYaml() {
         def yaml = new Yaml()
         this.consul_run_config = yaml.load(new FileReader("${this.env.PWD}/${this.config['files']['yaml']}"))
-        this.steps.sh "docker tag ${this.prepareImageToTag()}"
     }
 
     def prepareImageToTag() {
@@ -37,6 +36,7 @@ class ConsulTestPipeline extends PipelineBase{
 
     def run() {
         def tst = new TestFlow(this.steps, this.config, this.env)
+        this.readSwarmYaml()
         this.steps.stage('Clean environment') {
             tst.tryToClearEnvironment()
         }
@@ -47,7 +47,7 @@ class ConsulTestPipeline extends PipelineBase{
         }
 
         this.steps.stage("Make test requirements") {
-            this.createNewTag()
+            this.steps.sh "docker tag ${this.prepareImageToTag()}"
         }
     }
 }
