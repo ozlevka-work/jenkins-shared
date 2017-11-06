@@ -24,8 +24,7 @@ class ConsulTestPipeline extends PipelineBase{
 
     def createNewTag() {
         def yaml = new Yaml()
-        def workspace = pwd()
-        this.consul_run_config = yaml.load(new FileReader("${workspace}/${this.config['files']['yaml']}"))
+        this.consul_run_config = yaml.load(new FileReader("${this.env.PWD}/${this.config['files']['yaml']}"))
     }
 
     def run() {
