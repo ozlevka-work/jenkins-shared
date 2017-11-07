@@ -8,6 +8,7 @@ import org.yaml.snakeyaml.Yaml
 
 class ConsulTestPipeline extends PipelineBase{
     def consul_run_config
+    def machine_name
 
     ConsulTestPipeline(steps, current, environment) {
         super(steps, current, environment)
@@ -19,8 +20,8 @@ class ConsulTestPipeline extends PipelineBase{
 
     def runSystem() {
         this.steps.sh "docker swarm init --advertise-addr ${this.env.IP_ADDRESS}"
-        def machineName = this.steps.sh(script: "docker node ls | grep Leader | awk '{ print \$3 }'", returnStdout: true).trim()
-        this.steps.sh "docker node update --label-add management=yes ${machineName}"
+        this.machine_name = this.steps.sh(script: "docker node ls | grep Leader | awk '{ print \$3 }'", returnStdout: true).trim()
+        this.steps.sh "docker node update --label-add management=yes ${this.machine_name}"
         this.steps.sh "docker stack deploy -c ./${this.config['files']['yaml']} shield"
     }
 
@@ -41,13 +42,28 @@ class ConsulTestPipeline extends PipelineBase{
             tst.tryToClearEnvironment()
         }
 
-        this.steps.stage('Setup consul') {
-            this.downloadYamlFile()
-            this.runSystem()
-        }
+        try {
+            this.steps.stage('Setup consul') {
+                this.downloadYamlFile()
+                this.runSystem()
+            }
 
-        this.steps.stage("Make test requirements") {
-            this.steps.sh "docker tag ${this.prepareImageToTag()}"
+            this.steps.stage('Get latest version of test') {
+                this.fetchCodeChanges()
+            }
+
+            this.steps.stage("Make containers ready") {
+                this.steps.sh "cd Containers/Docker/shield-virtual-client && docker build -t consul-test:latest -f Docker-consul ."
+                this.steps.sh "docker tag ${this.prepareImageToTag()}"
+            }
+
+            this.steps.stage("Run test") {
+                this.steps.sh "docker run --rm -t -e CONSUL_ADDRESS=${this.machine_name} --network host -v /var/run/docker.sock:/var/run/docker.sock ${env.TEST_HOME}:/reports consul-test:latest"
+            }
+        } finally {
+            this.steps.stage('Clean environment') {
+                tst.tryToClearEnvironment()
+            }
         }
     }
 }
