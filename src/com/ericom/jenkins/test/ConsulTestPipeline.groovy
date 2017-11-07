@@ -56,7 +56,7 @@ class ConsulTestPipeline extends PipelineBase{
             }
 
             this.steps.stage("Run test") {
-                this.steps.sh "docker run --rm -t -e CONSUL_ADDRESS=${this.machine_name} --network host -v /var/run/docker.sock:/var/run/docker.sock -v ${env.PWD}:/reports consul-test:latest"
+                this.steps.sh "docker run --rm -t -e CONSUL_ADDRESS=${this.machine_name} --network host -v /var/run/docker.sock:/var/run/docker.sock -v ${env.PWD}/workspace/consul_test_ha:/reports consul-test:latest"
             }
         } finally {
             this.steps.stage('Clean environment') {
