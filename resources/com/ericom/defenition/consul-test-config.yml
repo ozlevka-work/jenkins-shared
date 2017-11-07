@@ -11,3 +11,8 @@ credentials:
 svc:
   url: 'https://github.com/EricomSoftwareLtd/SB.git'
   branch: consul
+
+notification:
+  mails:
+    - shield.build@ericom.com
+    - lev.ozeryansky@ericom.com
