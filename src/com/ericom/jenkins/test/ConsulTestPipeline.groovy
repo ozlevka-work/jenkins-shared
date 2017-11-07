@@ -36,13 +36,13 @@ class ConsulTestPipeline extends PipelineBase{
 
     def run() {
         def tst = new TestFlow(this.steps, this.config, this.env)
-        this.readSwarmYaml()
         this.steps.stage('Clean environment') {
             tst.tryToClearEnvironment()
         }
 
         try {
             this.steps.stage('Setup consul') {
+                this.readSwarmYaml()
                 this.runSystem()
             }
 
