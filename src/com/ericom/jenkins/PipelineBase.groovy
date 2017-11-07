@@ -30,4 +30,40 @@ class PipelineBase implements Serializable {
             }
         }
     }
+
+    def sendNotification(body_data) {
+        this.steps.stage('Send notifications') {
+            def result = this.currentBuild.result
+            if (result == null) {
+                this.steps.echo "No changes found"
+            } else {
+
+                if(result == "SUCCESS") {
+                    this.steps.emailext(
+                            to: this.config['notification']['mails'].join(","),
+                            subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                            body: """<p>SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                                ${body_data}
+                                <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${
+                                env.BUILD_NUMBER
+                            }]</a>&QUOT;</p> """//,
+                            //recipientProviders: [[$class: 'RequesterRecipientProvider']]
+                    )
+                } else {
+                    this.steps.emailext(
+                            to: this.config['notification']['mails'].join(","),
+                            subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                            body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                                ${body_data}
+                                <p>Errors: See attached log</p>
+                                <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER
+                            }]</a>&QUOT;</p>""",
+                            attachLog: true,
+                            compressLog: true
+                    )
+                }
+
+            }
+        }
+    }
 }

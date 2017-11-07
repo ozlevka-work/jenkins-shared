@@ -69,9 +69,22 @@ class ConsulTestPipeline extends PipelineBase{
                 this.steps.echo "Reports dir: ${reports_dir}"
                 this.steps.sh this.makeTestContainerRunScript(reports_dir)
             }
+
+            this.steps.stage("Publish report") {
+                this.steps.publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'report', reportFiles: 'mochawesome.html', reportName: "Tests Running  Report for Build ${env.BUILD_NUMBER}", reportTitles: ''])
+            }
+
+            this.currentBuild.result = 'SUCCESS'
+        } catch (Exception e) {
+            this.steps.echo e.toString()
+            this.currentBuild.result = 'FAILED'
         } finally {
             this.steps.stage('Clean environment') {
                 tst.tryToClearEnvironment()
+            }
+
+            this.steps.stage("Send notificiation") {
+                this.sendNotification("")
             }
         }
     }
