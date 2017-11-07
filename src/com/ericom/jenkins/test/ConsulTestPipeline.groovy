@@ -27,6 +27,7 @@ class ConsulTestPipeline extends PipelineBase{
 
     def readSwarmYaml() {
         def yaml = new Yaml()
+        this.downloadYamlFile()
         this.consul_run_config = yaml.load(new FileReader("${this.env.PWD}/${this.config['files']['yaml']}"))
     }
 
@@ -44,7 +45,6 @@ class ConsulTestPipeline extends PipelineBase{
 
         try {
             this.steps.stage('Setup consul') {
-                this.downloadYamlFile()
                 this.runSystem()
             }
 
