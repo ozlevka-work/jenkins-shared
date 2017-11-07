@@ -50,9 +50,7 @@ class ConsulTestPipeline extends PipelineBase{
                 this.runSystem()
             }
 
-            this.steps.stage('Get latest version of test') {
-                this.fetchCodeChanges()
-            }
+            this.fetchCodeChanges()
 
             this.steps.stage("Make containers ready") {
                 this.steps.sh "cd Containers/Docker/shield-virtual-client && docker build -t consul-test:latest -f Docker-consul ."
@@ -62,7 +60,11 @@ class ConsulTestPipeline extends PipelineBase{
             this.steps.stage("Run test") {
                 def reports_dir = "${this.makeReportsDirPath()}/consul_test_ha"
                 this.steps.echo "Reports dir: ${reports_dir}"
-                this.steps.sh "docker run --rm -t -e CONSUL_ADDRESS=${this.machine_name} --network host -v /var/run/docker.sock:/var/run/docker.sock -v ${reports_dir}:/reports consul-test:latest"
+                this.steps.sh """docker run --rm -t \\ 
+                                 -e CONSUL_ADDRESS=${this.machine_name} \\
+                                 --network host -v /var/run/docker.sock:/var/run/docker.sock \\
+                                 -v ${reports_dir}:/reports \\
+                              consul-test:latest"""
             }
         } finally {
             this.steps.stage('Clean environment') {
