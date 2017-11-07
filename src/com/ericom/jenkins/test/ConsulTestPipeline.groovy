@@ -38,6 +38,13 @@ class ConsulTestPipeline extends PipelineBase{
         return new File("${this.env.TEST_HOME}").getParent()
     }
 
+    def makeTestContainerRunScript(reports_dir) {
+        return  "docker run --rm -t " +
+                " -e CONSUL_ADDRESS=${this.machine_name} " +
+                "  --network host -v /var/run/docker.sock:/var/run/docker.sock " +
+                " -v ${reports_dir}:/reports consul-test:latest"
+    }
+
     def run() {
         def tst = new TestFlow(this.steps, this.config, this.env)
         this.steps.stage('Clean environment') {
@@ -60,11 +67,7 @@ class ConsulTestPipeline extends PipelineBase{
             this.steps.stage("Run test") {
                 def reports_dir = "${this.makeReportsDirPath()}/consul_test_ha"
                 this.steps.echo "Reports dir: ${reports_dir}"
-                this.steps.sh """docker run --rm -t \\ 
-                                 -e CONSUL_ADDRESS=${this.machine_name} \\
-                                 --network host -v /var/run/docker.sock:/var/run/docker.sock \\
-                                 -v ${reports_dir}:/reports \\
-                              consul-test:latest"""
+                this.steps.sh this.makeTestContainerRunScript(reports_dir)
             }
         } finally {
             this.steps.stage('Clean environment') {
