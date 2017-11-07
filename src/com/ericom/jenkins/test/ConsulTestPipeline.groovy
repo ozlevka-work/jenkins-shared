@@ -3,8 +3,7 @@ import com.ericom.jenkins.PipelineBase
 import com.ericom.jenkins.test.TestFlow
 
 
-@Grab(group = 'org.yaml', module='snakeyaml', version = "1.18")
-import org.yaml.snakeyaml.Yaml
+
 
 class ConsulTestPipeline extends PipelineBase{
     def consul_run_config
@@ -26,9 +25,8 @@ class ConsulTestPipeline extends PipelineBase{
     }
 
     def readSwarmYaml() {
-        def yaml = new Yaml()
         this.downloadYamlFile()
-        this.consul_run_config = yaml.load(new FileReader("${this.env.PWD}/${this.config['files']['yaml']}"))
+        this.consul_run_config = this.steps.readYaml file:"${this.env.PWD}/${this.config['files']['yaml']}"
     }
 
     def prepareImageToTag() {
