@@ -56,7 +56,7 @@ class ConsulTestPipeline extends PipelineBase{
             }
 
             this.steps.stage("Run test") {
-                def reports_dir = "${env.PWD}/workspace/consul_test_ha"
+                def reports_dir = "${env.PWD}"
                 this.steps.echo "Reports dir: ${reports_dir}"
                 this.steps.sh "docker run --rm -t -e CONSUL_ADDRESS=${this.machine_name} --network host -v /var/run/docker.sock:/var/run/docker.sock -v ${reports_dir}:/reports consul-test:latest"
             }
