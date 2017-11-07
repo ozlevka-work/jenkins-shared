@@ -83,9 +83,7 @@ class ConsulTestPipeline extends PipelineBase{
                 tst.tryToClearEnvironment()
             }
 
-            this.steps.stage("Send notificiation") {
-                this.sendNotification("")
-            }
+            this.sendNotification("")
         }
     }
 }
