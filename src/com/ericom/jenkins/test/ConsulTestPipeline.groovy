@@ -8,9 +8,11 @@ import com.ericom.jenkins.test.TestFlow
 class ConsulTestPipeline extends PipelineBase{
     def consul_run_config
     def machine_name
+    def tst
 
     ConsulTestPipeline(steps, current, environment) {
         super(steps, current, environment)
+        this.tst = new TestFlow(this.steps, this.config, this.env)
     }
 
     def downloadYamlFile() {
@@ -45,10 +47,22 @@ class ConsulTestPipeline extends PipelineBase{
                 " -v ${reports_dir}:/reports consul-test:latest"
     }
 
-    def run() {
-        def tst = new TestFlow(this.steps, this.config, this.env)
+    def make_consul_cluster() {
         this.steps.stage('Clean environment') {
-            tst.tryToClearEnvironment()
+            this.tst.tryToClearEnvironment()
+        }
+
+        this.steps.stage('Setup consul') {
+            this.readSwarmYaml()
+            this.runSystem()
+        }
+
+    }
+
+    def run() {
+
+        this.steps.stage('Clean environment') {
+            this.tst.tryToClearEnvironment()
         }
 
         try {
@@ -80,7 +94,7 @@ class ConsulTestPipeline extends PipelineBase{
             this.currentBuild.result = 'FAILED'
         } finally {
             this.steps.stage('Clean environment') {
-                tst.tryToClearEnvironment()
+                this.tst.tryToClearEnvironment()
             }
 
             this.sendNotification("")
