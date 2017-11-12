@@ -81,7 +81,7 @@ class ConsulTestPipeline extends PipelineBase{
             }
 
             this.steps.stage("Run test") {
-                reports_dir = "${this.makeReportsDirPath()}/consul_test_ha"
+                reports_dir = "${this.makeReportsDirPath()}/consul_admin_test_ha"
                 this.steps.echo "Reports dir: ${reports_dir}"
                 this.steps.sh this.makeTestContainerRunScript(reports_dir)
             }
