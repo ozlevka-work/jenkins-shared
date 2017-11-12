@@ -40,11 +40,11 @@ class ConsulTestPipeline extends PipelineBase{
         return new File("${this.env.TEST_HOME}").getParent()
     }
 
-    def makeTestContainerRunScript(reports_dir) {
+    def makeTestContainerRunScript(reports_dir, command = '') {
         return  "docker run --rm -t " +
                 " -e CONSUL_ADDRESS=${this.machine_name} " +
                 "  --network host -v /var/run/docker.sock:/var/run/docker.sock " +
-                " -v ${reports_dir}:/reports consul-test:latest"
+                " -v ${reports_dir}:/reports consul-test:latest " + command
     }
 
     def make_consul_cluster() {
