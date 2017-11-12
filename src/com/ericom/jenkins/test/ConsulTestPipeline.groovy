@@ -80,14 +80,18 @@ class ConsulTestPipeline extends PipelineBase{
                 this.steps.sh "docker tag ${this.prepareImageToTag()}"
             }
 
-            this.steps.stage("Run test") {
-                reports_dir = "${this.makeReportsDirPath()}/consul_admin_test_ha"
-                this.steps.echo "Reports dir: ${reports_dir}"
-                this.steps.sh this.makeTestContainerRunScript(reports_dir)
-            }
-
-            this.steps.stage("Publish report") {
-                this.steps.publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'report', reportFiles: 'mochawesome.html', reportName: "Consul update Test Running  Report for Build ${env.BUILD_NUMBER}", reportTitles: ''])
+            try {
+                this.steps.stage("Run test") {
+                    reports_dir = "${this.makeReportsDirPath()}/consul_admin_test_ha"
+                    this.steps.echo "Reports dir: ${reports_dir}"
+                    this.steps.sh this.makeTestContainerRunScript(reports_dir)
+                }
+            } catch (Exception ex) {
+                throw ex
+            } finally {
+                this.steps.stage("Publish report") {
+                    this.steps.publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'report', reportFiles: 'mochawesome.html', reportName: "Consul update Test Running  Report for Build ${env.BUILD_NUMBER}", reportTitles: ''])
+                }
             }
 
             this.steps.stage('Clean environment') {
@@ -99,14 +103,20 @@ class ConsulTestPipeline extends PipelineBase{
                 this.runSystem()
             }
 
-            this.steps.stage('Admin backup test') {
-                this.steps.sh "if [ ! -d ${reports_dir}/admin ]; then mkdir -p ${reports_dir}/admin; fi"
-                this.steps.sh this.makeTestContainerRunScript(reports_dir + "/admin", "npm run consul-die-test")
+            try {
+                this.steps.stage('Admin backup test') {
+                    this.steps.sh "if [ ! -d ${reports_dir}/admin ]; then mkdir -p ${reports_dir}/admin; fi"
+                    this.steps.sh this.makeTestContainerRunScript(reports_dir + "/admin", "npm run consul-die-test")
+                }
+            } catch (Exception ex) {
+                throw ex
+            } finally {
+                this.steps.stage("Publish report") {
+                    this.steps.publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'report', reportFiles: 'mochawesome.html', reportName: "Admin backup Test Running  Report for Build ${env.BUILD_NUMBER}", reportTitles: ''])
+                }    
             }
 
-            this.steps.stage("Publish report") {
-                this.steps.publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'report', reportFiles: 'mochawesome.html', reportName: "Admin backup Test Running  Report for Build ${env.BUILD_NUMBER}", reportTitles: ''])
-            }
+            
 
             this.currentBuild.result = 'SUCCESS'
         } catch (Exception e) {
