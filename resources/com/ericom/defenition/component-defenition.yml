@@ -24,12 +24,15 @@ components:
       dependency:
         - nodejs
         - cef
-
     nodejs:
       path: Containers/Docker/secure-remote-browser-ubuntu-nodejs-xdummy
       dependency:
         - cef
+    consul:
+          path: Containers/Docker/shield-configuration
 
+    admin:
+          path: Containers/Docker/shield-admin
     cef:
       path: Containers/Docker/shield-cef
 
