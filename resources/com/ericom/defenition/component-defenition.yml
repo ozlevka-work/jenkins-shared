@@ -72,6 +72,9 @@ components:
     shield-squid-auth:
       path: Containers/Docker/shield-squid-auth
 
+    shield-logspout:
+      path: Containers/Docker/shield-logspout
+
 test:
   urls:
     - http://ericom.com
