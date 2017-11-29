@@ -182,9 +182,9 @@ class TestFlow implements Serializable{
                 waitForSystemHealthy()
             }
 
-            this.steps.stage("Run npm test") {
+            /*this.steps.stage("Run npm test") {
                 this.steps.sh "docker run --rm --network host -t -v \$TEST_HOME:/reports -e \"WEB_HOST=${env.WEB_HOST}\" -e \"PROXY_HOST=${env.PROXY_HOST}\" node-test"
-            }
+            }*/
 
             this.steps.stage("Test Admin") {
                 this.steps.sh "timeout ${this.config['test']['admin']['timeout']} docker run --rm --network host -e ADMIN_URL=${env.IP_ADDRESS}:8181 ${this.config['test']['admin']['container']}"
