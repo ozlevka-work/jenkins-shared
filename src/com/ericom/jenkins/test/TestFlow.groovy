@@ -185,6 +185,10 @@ class TestFlow implements Serializable{
             this.steps.stage("Run npm test") {
                 this.steps.sh "docker run --rm --network host -t -v \$TEST_HOME:/reports -e \"WEB_HOST=${env.WEB_HOST}\" -e \"PROXY_HOST=${env.PROXY_HOST}\" node-test"
             }
+
+            this.steps.stage("Test Admin") {
+                this.steps.sh "timeout ${this.config['test']['admin']['timeout']} docker run --rm --network host -e ADMIN_URL=${env..IP_ADDRESS}:8181 ${this.config['test']['admin']['container']}"
+            }
         } finally {
             this.steps.stage("Publish report") {
                 this.steps.publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'report', reportFiles: 'mochawesome.html', reportName: "Tests Running  Report for Build ${env.BUILD_NUMBER}", reportTitles: ''])
