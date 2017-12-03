@@ -182,9 +182,9 @@ class TestFlow implements Serializable{
                 waitForSystemHealthy()
             }
 
-            /*this.steps.stage("Run npm test") {
+            this.steps.stage("Run npm test") {
                 this.steps.sh "docker run --rm --network host -t -v \$TEST_HOME:/reports -e \"WEB_HOST=${env.WEB_HOST}\" -e \"PROXY_HOST=${env.PROXY_HOST}\" node-test"
-            }*/
+            }
 
             this.steps.stage("Test Admin") {
                 this.steps.timeout(time: this.config["test"]["admin"]["timeout"], unit: "SECONDS") {
@@ -192,9 +192,9 @@ class TestFlow implements Serializable{
                 }
             }
         } finally {
-//            this.steps.stage("Publish report") {
-//                this.steps.publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'report', reportFiles: 'mochawesome.html', reportName: "Tests Running  Report for Build ${env.BUILD_NUMBER}", reportTitles: ''])
-//            }
+            this.steps.stage("Publish report") {
+                this.steps.publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'report', reportFiles: 'mochawesome.html', reportName: "Tests Running  Report for Build ${env.BUILD_NUMBER}", reportTitles: ''])
+            }
 
             this.steps.stage("Final Clean") {
                 this.tryToClearEnvironment()
