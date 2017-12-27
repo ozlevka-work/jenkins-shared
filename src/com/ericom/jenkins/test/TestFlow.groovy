@@ -188,7 +188,7 @@ class TestFlow implements Serializable{
 
             this.steps.stage("Test Admin") {
                 this.steps.timeout(time: this.config["test"]["admin"]["timeout"], unit: "SECONDS") {
-                    this.steps.sh "docker run --rm --network host -e ADMIN_URL=${env.IP_ADDRESS}:8181 ${this.config['test']['admin']['container']}"
+                    this.steps.sh "docker run --rm --network host -e ADMIN_URL=${env.IP_ADDRESS}:8181 -e COMPONENT_TIMEOUT=${this.config['test']['admin']['componentTimeout']} ${this.config['test']['admin']['container']}"
                 }
             }
         } finally {

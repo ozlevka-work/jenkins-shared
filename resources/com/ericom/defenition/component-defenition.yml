@@ -86,7 +86,8 @@ test:
       - docker-compose_dev.yml
   admin:
     timeout: 300
-    container: "securebrowsing/admin-test:171129-17.21"
+    container: "securebrowsing/admin-test:171227-17.45"
+    componentTimeout: 40
   wait:
     sleep: 30
     retries: 20
