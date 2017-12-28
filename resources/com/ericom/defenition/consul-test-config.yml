@@ -10,7 +10,7 @@ credentials:
 
 svc:
   url: 'https://github.com/EricomSoftwareLtd/SB.git'
-  branch: consul
+  branch: consep
 
 notification:
   mails:

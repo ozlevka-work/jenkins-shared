@@ -26,7 +26,7 @@ class PipelineBase implements Serializable {
             if (this.config["svc"].containsKey('branch')) {
                 this.steps.git([url: this.config['svc']['url'], credentialsId: this.config['credentials']['git'], branch: this.config['svc']['branch'], changelog: true])
             } else {
-                this.steps.git([url: this.config['svc']['url'], credentialsId: this.config['credentials']['git'], changelog: true])
+                this.steps.git([url: this.config['svc']['url'], credentialsId: this.config['credentials']['git'], branch: "master", changelog: true])
             }
         }
     }
