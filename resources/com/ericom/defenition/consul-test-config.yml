@@ -1,7 +1,7 @@
 
 files:
-  branchUrl:  https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/consul/Setup/
-  yaml: docker-compose_consul.yml
+  branchUrl:  https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/consep/Setup/
+  yaml: docker-compose_dev.yml
 
 credentials:
   git: 451bb7d7-5c99-4d21-aa3a-1c6a1027406b
