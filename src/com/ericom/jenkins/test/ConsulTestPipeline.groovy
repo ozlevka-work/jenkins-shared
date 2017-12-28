@@ -48,8 +48,8 @@ class ConsulTestPipeline extends PipelineBase{
 
     def makeTestContainerRunScript(reports_dir, command = '') {
         return  "docker run --rm -t " +
-                " -e CONSUL_ADDRESS=${this.machine_name} " +
-                "  --network host -v /var/run/docker.sock:/var/run/docker.sock " +
+                " -e CONSUL_ADDRESS=${this.env.IP_ADDRESS} " +
+                " -v /var/run/docker.sock:/var/run/docker.sock " +
                 " -v ${reports_dir}:/reports consul-test:latest " + command
     }
 
