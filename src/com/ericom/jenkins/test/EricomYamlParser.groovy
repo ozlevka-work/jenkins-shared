@@ -5,6 +5,6 @@ import org.yaml.snakeyaml.Yaml
 class EricomYamlParser {
 
     EricomYamlParser(String originalFile) {
-
+        println(originalFile)
     }
 }
