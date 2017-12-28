@@ -39,7 +39,7 @@ class ConsulTestPipeline extends PipelineBase{
     }
 
     def prepareImageToTag() {
-        return "\"${this.config['test']['consul-image']}:latest ${this.config['test']['consul-image']}:jenkins-test"
+        return "${this.config['test']['consul-image']}:latest ${this.config['test']['consul-image']}:jenkins-test"
     }
 
     def makeReportsDirPath() {
