@@ -22,7 +22,7 @@ class ConsulTestPipeline extends PipelineBase{
     }
 
     def runSystem() {
-        this.steps.sh "docker swarm init --advertise-addr ${this.env.IP_ADDRESS}"
+        this.steps.sh "docker swarm init --advertise-addr ${this.env.IP_ADDRESS} --task-history-limit 0"
         this.machine_name = this.steps.sh(script: "docker node ls | grep Leader | awk '{ print \$3 }'", returnStdout: true).trim()
         this.steps.sh "docker node update --label-add management=yes ${this.machine_name}"
         this.steps.sh "docker stack deploy -c ./${CONSUL_YAML_NAME} shield"

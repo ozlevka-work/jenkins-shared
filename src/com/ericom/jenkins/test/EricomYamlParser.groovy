@@ -39,4 +39,8 @@ class EricomYamlParser implements Serializable {
         return (new Yaml()).dump(output)
     }
 
+    def saveToFile(writer) {
+        (new Yaml()).dump(output, writer)
+    }
+
 }
