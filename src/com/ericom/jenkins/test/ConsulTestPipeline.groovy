@@ -100,10 +100,6 @@ class ConsulTestPipeline extends PipelineBase{
                 }
             }
 
-            this.steps.stage('Clean environment') {
-                this.tst.tryToClearEnvironment()
-            }
-
             this.currentBuild.result = 'SUCCESS'
         } catch (Exception e) {
             this.steps.echo e.toString()
