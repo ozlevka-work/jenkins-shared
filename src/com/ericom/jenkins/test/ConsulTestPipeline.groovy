@@ -1,11 +1,13 @@
 package com.ericom.jenkins.test
 import com.ericom.jenkins.PipelineBase
 import com.ericom.jenkins.test.TestFlow
+import com.ericom.jenkins.test.EricomYamlParser
 
 //JenkinsPipelineUnit
 
 
 class ConsulTestPipeline extends PipelineBase{
+    final CONSUL_YAML_NAME = "consul-compose.yaml"
     def consul_run_config
     def machine_name
     def tst
@@ -23,12 +25,17 @@ class ConsulTestPipeline extends PipelineBase{
         this.steps.sh "docker swarm init --advertise-addr ${this.env.IP_ADDRESS}"
         this.machine_name = this.steps.sh(script: "docker node ls | grep Leader | awk '{ print \$3 }'", returnStdout: true).trim()
         this.steps.sh "docker node update --label-add management=yes ${this.machine_name}"
-        this.steps.sh "docker stack deploy -c ./${this.config['files']['yaml']} shield"
+        this.steps.sh "docker stack deploy -c ./${CONSUL_YAML_NAME} shield"
     }
 
     def readSwarmYaml() {
         this.downloadYamlFile()
-        this.consul_run_config = this.steps.readYaml file:"${this.env.PWD}/${this.config['files']['yaml']}"
+        def parser = new EricomYamlParser()
+        parser.loadFile("${this.env.PWD}/${this.config['files']['yaml']}")
+        def writer = new FileWriter("${this.env.PWD}/${CONSUL_YAML_NAME}", false)
+        writer.write(parser.makeConsulTestYaml())
+        writer.flush()
+        writer.close()
     }
 
     def prepareImageToTag() {
