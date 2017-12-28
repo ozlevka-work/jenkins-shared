@@ -16,3 +16,5 @@ notification:
   mails:
     - shield.build@ericom.com
     - lev.ozeryansky@ericom.com
+test:
+  consul-image: "securebrowsing/shield-configuration"

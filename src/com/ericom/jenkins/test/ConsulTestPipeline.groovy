@@ -39,8 +39,7 @@ class ConsulTestPipeline extends PipelineBase{
     }
 
     def prepareImageToTag() {
-        def arr = this.consul_run_config["services"]["consul-server"]["image"].split(':')
-        return "${arr[0]}:${arr[1]} ${arr[0]}:jenkins-test"
+        return "${this.config['test']['consul-image']}:jenkins-test"
     }
 
     def makeReportsDirPath() {
