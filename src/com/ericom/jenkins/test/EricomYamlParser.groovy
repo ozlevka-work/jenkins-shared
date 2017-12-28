@@ -5,6 +5,10 @@ import org.yaml.snakeyaml.Yaml
 class EricomYamlParser implements Serializable {
     def yaml
     def current
+    def output
+
+    final CONSUL_SERVICE = "consul"
+    final CONSUL_SERVER_SERVICE = "consul-server"
 
     EricomYamlParser() {
         yaml = new Yaml()
@@ -14,11 +18,17 @@ class EricomYamlParser implements Serializable {
         def file = new File(path)
         def stream = new FileReader(file)
         current = yaml.load(stream)
+        output = new LinkedHashMap()
     }
 
+    def makeConsulTestYaml() {
+        for(Map.Entry key: current.entrySet()) {
+            if(key.getKey() != "services") {
+                output.put(key.getKey(), key.getValue())
+            }
+        }
 
-    def getFile() {
-        return yaml.dump(current)
+        return (new Yaml()).dump(output)
     }
 
 }
