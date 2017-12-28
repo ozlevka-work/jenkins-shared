@@ -104,13 +104,6 @@ class ConsulTestPipeline extends PipelineBase{
                 this.tst.tryToClearEnvironment()
             }
 
-            this.steps.stage('Setup consul') {
-                this.readSwarmYaml()
-                this.runSystem()
-            }
-
-            
-
             this.currentBuild.result = 'SUCCESS'
         } catch (Exception e) {
             this.steps.echo e.toString()
