@@ -192,7 +192,7 @@ class TestFlow implements Serializable{
                 this.steps.timeout(time: this.config["test"]["admin"]["timeout"], unit: "SECONDS") {
                     for(int i = 0; i < retries; i++) {
                         this.steps.echo "Start admin test number ${i + 1}"
-                        status = this.steps.sh script:"docker run --rm --network host -e ADMIN_URL=${env.IP_ADDRESS}:8181 -e COMPONENT_TIMEOUT=${this.config['test']['admin']['componentTimeout']} ${this.config['test']['admin']['container']}", retutrnStatus:true
+                        status = this.steps.sh script:"docker run --rm --network host -e ADMIN_URL=${env.IP_ADDRESS}:8181 -e COMPONENT_TIMEOUT=${this.config['test']['admin']['componentTimeout']} ${this.config['test']['admin']['container']}", returnStatus:true
                         this.steps.echo "Test finish with status ${status}"
                         if(status == 0) {
                             break
