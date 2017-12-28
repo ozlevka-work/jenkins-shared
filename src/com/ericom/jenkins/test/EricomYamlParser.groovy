@@ -25,6 +25,14 @@ class EricomYamlParser implements Serializable {
         for(Map.Entry key: current.entrySet()) {
             if(key.getKey() != "services") {
                 output.put(key.getKey(), key.getValue())
+            } else {
+                output.put(key.getKey(), new LinkedHashMap())
+                LinkedHashMap serv_map = (key.getValue() as LinkedHashMap)
+                for (Map.Entry serv: serv_map.entrySet()) {
+                    if(serv.getKey() == CONSUL_SERVER_SERVICE || serv.getKey() == CONSUL_SERVICE) {
+                        (output.get("services")).put(serv.getKey(), serv.getValue())
+                    }
+                }
             }
         }
 
