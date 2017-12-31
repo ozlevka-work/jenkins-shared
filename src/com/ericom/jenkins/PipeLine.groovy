@@ -223,6 +223,7 @@ class PipeLine implements Serializable {
     def runUnitTestForChanges() {
         this.steps.stage("Unit Tests") {
             for(String key: this.changeset.keySet()) {
+                this.steps.echo "Run tests for ${key}"
                 def buildPath = this.config['components'][key]['path']
                 def file = new File("${buildPath}/_test.sh")
                 if(file.exists()) {
