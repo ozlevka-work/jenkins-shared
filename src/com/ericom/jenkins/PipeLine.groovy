@@ -222,12 +222,15 @@ class PipeLine implements Serializable {
 
     def runUnitTestForChanges() {
         this.steps.stage("Unit Tests") {
+            def currentDir = new File(".").getAbsoluteFile().getParent()
             for(String key: this.changeset.keySet()) {
                 this.steps.echo "Run tests for ${key}"
                 def buildPath = this.config['components'][key]['path']
-                def file = new File("${buildPath}/_test.sh")
+                def file = new File("${currentDir}/${buildPath}/_test.sh")
                 if(file.exists()) {
                     this.steps.sh "cd ${buildPath} && ./_test.sh"
+                } else {
+                    this.steps.echo "Skip tests for ${key}"
                 }
             }
         }
