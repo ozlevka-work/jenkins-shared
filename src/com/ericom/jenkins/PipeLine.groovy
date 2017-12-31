@@ -34,6 +34,7 @@ class PipeLine implements Serializable {
     def run() {
         try {
             if (fetchChangesCodeChanges()) {
+                runUnitTestForChanges()
                 runBuildChanged()
                 def test_flow = new TestFlow(this.steps, this.config, this.env)
                 makeDockerLogin()
@@ -219,7 +220,18 @@ class PipeLine implements Serializable {
         }
     }
 
-
+    def runUnitTestForChanges() {
+        this.steps.stage("Unit Tests") {
+            def keys = this.changeset.keySet()
+            for(int i = 0; i < keys.size(); i++) {
+                def buildPath = this.config['components'][this.build_array[i]]['path']
+                def file = new File("${buildPath}/_test.sh")
+                if(file.exists()) {
+                    this.steps.sh "cd ${buildPath} && ./_test.sh"
+                }
+            }
+        }
+    }
 
     def runBuildChanged() {
         this.steps.stage('Build Images') {
