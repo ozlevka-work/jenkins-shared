@@ -10,7 +10,7 @@ notification:
 
 svc:
   url: 'https://github.com/EricomSoftwareLtd/SB.git'
-  branch: master
+  branch: consep
 
 components:
     consul:
@@ -83,7 +83,7 @@ test:
     - http://ericom.com
     - http://ynet.co.il
   swarm:
-    repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/master/Setup
+    repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/consbackup/Setup
     files:
       - deployshield-dev.sh
       - docker-compose_dev.yml
