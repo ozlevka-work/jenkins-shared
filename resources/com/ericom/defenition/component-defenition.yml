@@ -75,6 +75,9 @@ components:
     shield-logspout:
       path: Containers/Docker/shield-logspout
 
+    shield-consul-agent:
+      path: Containers/Docker/shield-consul-agent
+
 test:
   urls:
     - http://ericom.com
