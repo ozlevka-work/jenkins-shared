@@ -10,12 +10,9 @@ notification:
 
 svc:
   url: 'https://github.com/EricomSoftwareLtd/SB.git'
-  branch: master
+  branch: consep
 
 components:
-    consul:
-      path: Containers/Docker/shield-configuration
-
     admin:
       path: Containers/Docker/shield-admin
 
@@ -30,9 +27,6 @@ components:
         - cef
     consul:
           path: Containers/Docker/shield-configuration
-
-    admin:
-          path: Containers/Docker/shield-admin
     cef:
       path: Containers/Docker/shield-cef
 
@@ -75,12 +69,15 @@ components:
     shield-logspout:
       path: Containers/Docker/shield-logspout
 
+    shield-consul-agent:
+      path: Containers/Docker/shield-consul-agent
+
 test:
   urls:
     - http://ericom.com
     - http://ynet.co.il
   swarm:
-    repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/master/Setup
+    repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/consbackup/Setup
     files:
       - deployshield-dev.sh
       - docker-compose_dev.yml

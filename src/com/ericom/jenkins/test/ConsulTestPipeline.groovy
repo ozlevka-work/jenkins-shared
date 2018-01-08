@@ -1,11 +1,13 @@
 package com.ericom.jenkins.test
 import com.ericom.jenkins.PipelineBase
 import com.ericom.jenkins.test.TestFlow
+import com.ericom.jenkins.test.EricomYamlParser
 
 //JenkinsPipelineUnit
 
 
 class ConsulTestPipeline extends PipelineBase{
+    final CONSUL_YAML_NAME = "consul-compose.yaml"
     def consul_run_config
     def machine_name
     def tst
@@ -20,20 +22,24 @@ class ConsulTestPipeline extends PipelineBase{
     }
 
     def runSystem() {
-        this.steps.sh "docker swarm init --advertise-addr ${this.env.IP_ADDRESS}"
+        this.steps.sh "docker swarm init --advertise-addr ${this.env.IP_ADDRESS} --task-history-limit 0"
         this.machine_name = this.steps.sh(script: "docker node ls | grep Leader | awk '{ print \$3 }'", returnStdout: true).trim()
         this.steps.sh "docker node update --label-add management=yes ${this.machine_name}"
-        this.steps.sh "docker stack deploy -c ./${this.config['files']['yaml']} shield"
+        this.steps.sh "docker stack deploy -c ./${CONSUL_YAML_NAME} shield"
     }
 
     def readSwarmYaml() {
         this.downloadYamlFile()
-        this.consul_run_config = this.steps.readYaml file:"${this.env.PWD}/${this.config['files']['yaml']}"
+        def parser = new EricomYamlParser()
+        parser.loadFile("${this.env.PWD}/${this.config['files']['yaml']}")
+        def writer = new FileWriter("${this.env.PWD}/${CONSUL_YAML_NAME}", false)
+        writer.write(parser.makeConsulTestYaml())
+        writer.flush()
+        writer.close()
     }
 
     def prepareImageToTag() {
-        def arr = this.consul_run_config["services"]["consul-server"]["image"].split(':')
-        return "${arr[0]}:${arr[1]} ${arr[0]}:jenkins-test"
+        return "${this.config['test']['consul-image']}:latest ${this.config['test']['consul-image']}:jenkins-test"
     }
 
     def makeReportsDirPath() {
@@ -42,8 +48,8 @@ class ConsulTestPipeline extends PipelineBase{
 
     def makeTestContainerRunScript(reports_dir, command = '') {
         return  "docker run --rm -t " +
-                " -e CONSUL_ADDRESS=${this.machine_name} " +
-                "  --network host -v /var/run/docker.sock:/var/run/docker.sock " +
+                " -e CONSUL_ADDRESS=${this.env.IP_ADDRESS} " +
+                " -v /var/run/docker.sock:/var/run/docker.sock " +
                 " -v ${reports_dir}:/reports consul-test:latest " + command
     }
 
@@ -93,30 +99,6 @@ class ConsulTestPipeline extends PipelineBase{
                     this.steps.publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'report', reportFiles: 'mochawesome.html', reportName: "Consul update Test Running  Report for Build ${env.BUILD_NUMBER}", reportTitles: ''])
                 }
             }
-
-            this.steps.stage('Clean environment') {
-                this.tst.tryToClearEnvironment()
-            }
-
-            this.steps.stage('Setup consul') {
-                this.readSwarmYaml()
-                this.runSystem()
-            }
-
-            try {
-                this.steps.stage('Admin backup test') {
-                    this.steps.sh "if [ ! -d ${reports_dir}/admin ]; then mkdir -p ${reports_dir}/admin; fi"
-                    this.steps.sh this.makeTestContainerRunScript(reports_dir + "/admin", "npm run consul-die-test")
-                }
-            } catch (Exception ex) {
-                throw ex
-            } finally {
-                this.steps.stage("Publish report") {
-                    this.steps.publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'report', reportFiles: 'mochawesome.html', reportName: "Admin backup Test Running  Report for Build ${env.BUILD_NUMBER}", reportTitles: ''])
-                }    
-            }
-
-            
 
             this.currentBuild.result = 'SUCCESS'
         } catch (Exception e) {

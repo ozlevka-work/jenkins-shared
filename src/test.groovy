@@ -1,10 +1,8 @@
-
+import com.ericom.jenkins.test.EricomYamlParser
 
 
 def test1() {
     println("Hello test")
 }
 
-test1()
-println("Hello world")
-
+println(new File(".").getAbsoluteFile().getParent())
