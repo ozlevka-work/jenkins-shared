@@ -13,9 +13,6 @@ svc:
   branch: consep
 
 components:
-    consul:
-      path: Containers/Docker/shield-configuration
-
     admin:
       path: Containers/Docker/shield-admin
 
