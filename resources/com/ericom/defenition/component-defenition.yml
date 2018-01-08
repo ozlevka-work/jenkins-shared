@@ -77,7 +77,7 @@ test:
     - http://ericom.com
     - http://ynet.co.il
   swarm:
-    repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/consbackup/Setup
+    repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/master/Setup
     files:
       - deployshield-dev.sh
       - docker-compose_dev.yml
