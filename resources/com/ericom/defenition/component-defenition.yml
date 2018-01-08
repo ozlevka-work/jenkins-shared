@@ -10,7 +10,7 @@ notification:
 
 svc:
   url: 'https://github.com/EricomSoftwareLtd/SB.git'
-  branch: consep
+  branch: master
 
 components:
     admin:
