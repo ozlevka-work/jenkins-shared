@@ -72,6 +72,9 @@ components:
     shield-consul-agent:
       path: Containers/Docker/shield-consul-agent
 
+    netdata:
+      path: Containers/Docker/shield-netdata
+
 test:
   urls:
     - http://ericom.com
