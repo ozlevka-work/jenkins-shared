@@ -3,10 +3,12 @@ import com.ericom.jenkins.PipeLine
 
 def pl = new PipeLine(steps, currentBuild, env)
 def lib = libraryResource "com/ericom/defenition/component-defenition.yml"
+host_address = '192.168.50.78'
 pl.loadConfig(lib)
 node {
-    env.PATH = "/sbin:${env.PATH}"
-    env.IP_ADDRESS = '126.0.1.140'
-    echo 'Start'
-    pl.run()
+  env.TEST_HOME = '/home/ericom/jenkins-home/workspace/shield-build-pipeline'
+  env.IP_ADDRESS = host_address
+  env.WEB_HOST = host_address
+  env.PROXY_HOST = host_address
+  pl.run()
 }
