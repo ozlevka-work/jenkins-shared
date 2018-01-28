@@ -75,6 +75,9 @@ components:
     netdata:
       path: Containers/Docker/shield-netdata
 
+    shield_swarm-exec:
+      path: Containers/Docker/shield_swarm-exec
+
 test:
   urls:
     - http://ericom.com
