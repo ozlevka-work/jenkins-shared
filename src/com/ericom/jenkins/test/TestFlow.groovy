@@ -182,6 +182,11 @@ class TestFlow implements Serializable{
                 waitForSystemHealthy()
             }
 
+            this.steps.stage("Wait ${this.config['test']['pause']} seconds for system is stable") {
+                def time = this.config['test']['pause']
+                sleep(time.toInteger())
+            }
+
             this.steps.stage("Run npm test") {
                 this.steps.sh "docker run --rm --network host -t -v \$TEST_HOME:/reports -e \"WEB_HOST=${env.WEB_HOST}\" -e \"PROXY_HOST=${env.PROXY_HOST}\" node-test"
             }
