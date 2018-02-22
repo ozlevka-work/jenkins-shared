@@ -184,7 +184,7 @@ class TestFlow implements Serializable{
 
             this.steps.stage("Wait ${this.config['test']['pause']} seconds for system is stable") {
                 def time = this.config['test']['pause']
-                this.steps.sleep time.toInteger()
+                sleep (time.toInteger() * 1000)
             }
 
             this.steps.stage("Run npm test") {
