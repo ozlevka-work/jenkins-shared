@@ -78,6 +78,9 @@ components:
     shield_swarm-exec:
       path: Containers/Docker/shield_swarm-exec
 
+    speedtest:
+      path: Containers/Docker/shield-speedtest
+
 test:
   urls:
     - http://ericom.com
