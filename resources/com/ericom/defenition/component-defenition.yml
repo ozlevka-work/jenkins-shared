@@ -81,6 +81,9 @@ components:
     speedtest:
       path: Containers/Docker/shield-speedtest
 
+    autoupdate:
+      path: Containers/Docker/shield-autoupdate
+
 test:
   urls:
     - http://ericom.com
