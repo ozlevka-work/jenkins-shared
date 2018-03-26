@@ -90,7 +90,7 @@ test:
     files:
       - deployshield-dev.sh
       - docker-compose_dev.yml
-  pause: 60
+  pause: 120
   admin:
     timeout: 300
     container: "securebrowsing/admin-test:180211-11.08"
