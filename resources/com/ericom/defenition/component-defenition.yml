@@ -86,6 +86,9 @@ components:
 
     notifier:
       path: Containers/Docker/shield-notifier
+      
+    unbound:
+      path: Containers/Docker/shield-unbound
 
 test:
   urls:
