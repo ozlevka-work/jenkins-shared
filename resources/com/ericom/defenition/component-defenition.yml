@@ -95,10 +95,10 @@ test:
     - http://ericom.com
     - http://ynet.co.il
   swarm:
-    repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/master/Setup
+    repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/RemoveChannels/Setup
     files:
-      - deployshield-dev.sh
-      - docker-compose_dev.yml
+      - deploy-shield.sh
+      - docker-compose.yml
   pause: 120
   admin:
     timeout: 300
