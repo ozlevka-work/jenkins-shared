@@ -95,7 +95,7 @@ test:
     - http://ericom.com
     - http://ynet.co.il
   swarm:
-    repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/RemoveChannels/Setup
+    repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/Dev/Setup
     files:
       - deploy-shield.sh
       - docker-compose.yml
