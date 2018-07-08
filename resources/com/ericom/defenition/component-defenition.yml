@@ -13,6 +13,19 @@ svc:
   branch: issue-533
 
 components:
+
+    es-system-monitor:
+      path: Containers/Docker/es-system-monitor
+      
+    es-system-configuration:
+      path: Containers/Docker/es-system-configuration
+    
+    es-remote-browser-scaler:
+      path: Containers/Docker/es-remote-browser-scaler
+    
+    es-license-manager:
+      path: Containers/Docker/es-license-manager
+      
     admin:
       path: Containers/Docker/shield-admin
 
@@ -57,8 +70,8 @@ components:
     shield-cdr-dispatcher:
       path: Containers/Docker/shield-cdr-dispatcher
 
-    shield-web-service:
-      path: Containers/Docker/shield-web-service
+    es-web-service:
+      path: Containers/Docker/es-web-service
 
     shield-maintenance:
       path: Containers/Docker/shield-maintenance
@@ -78,17 +91,17 @@ components:
     shield_swarm-exec:
       path: Containers/Docker/shield_swarm-exec
 
-    speedtest:
-      path: Containers/Docker/shield-speedtest
+    es-speedtest:
+      path: Containers/Docker/es-speedtest
 
     autoupdate:
       path: Containers/Docker/shield-autoupdate
 
-    notifier:
-      path: Containers/Docker/shield-notifier
+    es-notifier:
+      path: Containers/Docker/es-notifier
       
-    unbound:
-      path: Containers/Docker/shield-unbound
+    es-dns:
+      path: Containers/Docker/es-dns
 
 test:
   urls:
