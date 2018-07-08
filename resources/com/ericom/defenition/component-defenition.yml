@@ -58,8 +58,8 @@ components:
     portainer:
       path: Containers/Docker/shield-portainer
 
-    collector:
-      path: Containers/Docker/shield-collector
+    es-collector:
+      path: Containers/Docker/es-collector
 
     extproxy:
       path: Containers/Docker/shield-squid-ext
