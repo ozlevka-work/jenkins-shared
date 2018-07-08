@@ -61,8 +61,8 @@ components:
     es-collector:
       path: Containers/Docker/es-collector
 
-    extproxy:
-      path: Containers/Docker/shield-squid-ext
+    es-proxy-external:
+      path: Containers/Docker/es-proxy-external
 
     shield-cdr-controller:
       path: Containers/Docker/shield-cdr-controller
