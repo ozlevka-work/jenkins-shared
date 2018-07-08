@@ -10,7 +10,7 @@ notification:
 
 svc:
   url: 'https://github.com/EricomSoftwareLtd/SB.git'
-  branch: master
+  branch: issue-533
 
 components:
     admin:
@@ -95,7 +95,7 @@ test:
     - http://ericom.com
     - http://ynet.co.il
   swarm:
-    repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/Dev/Setup
+    repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/NewNames%23533/Setup
     files:
       - deploy-shield.sh
       - docker-compose.yml
