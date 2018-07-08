@@ -64,8 +64,8 @@ components:
     es-proxy-external:
       path: Containers/Docker/es-proxy-external
 
-    shield-cdr-controller:
-      path: Containers/Docker/shield-cdr-controller
+    es-cdr-controller:
+      path: Containers/Docker/es-cdr-controller
 
     es-cdr-dispatcher:
       path: Containers/Docker/es-cdr-dispatcher
