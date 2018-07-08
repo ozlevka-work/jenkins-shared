@@ -43,8 +43,8 @@ components:
     cef:
       path: Containers/Docker/shield-cef
 
-    proxy:
-      path: Containers/Docker/shield-squid-alpine
+    es-proxy-internal:
+      path: Containers/Docker/es-proxy-internal
 
     es-policy-manager:
       path: Containers/Docker/es-policy-manager
