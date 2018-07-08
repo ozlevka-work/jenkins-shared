@@ -46,8 +46,8 @@ components:
     proxy:
       path: Containers/Docker/shield-squid-alpine
 
-    icap:
-      path: Containers/Docker/shield-icap
+    es-policy-manager:
+      path: Containers/Docker/es-policy-manager
 
     elk:
       path: Containers/Docker/shield-elk
