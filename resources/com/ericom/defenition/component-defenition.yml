@@ -73,8 +73,8 @@ components:
     es-web-service:
       path: Containers/Docker/es-web-service
 
-    shield-maintenance:
-      path: Containers/Docker/shield-maintenance
+    es-maintenance:
+      path: Containers/Docker/es-maintenance
 
     es-proxy-auth:
       path: Containers/Docker/es-proxy-auth
