@@ -92,7 +92,7 @@ components:
 
 test:
   urls:
-    - http://ericom.com
+    - http://google.com
     - http://ynet.co.il
   swarm:
     repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/NewNames%23533/Setup
