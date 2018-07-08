@@ -67,8 +67,8 @@ components:
     shield-cdr-controller:
       path: Containers/Docker/shield-cdr-controller
 
-    shield-cdr-dispatcher:
-      path: Containers/Docker/shield-cdr-dispatcher
+    es-cdr-dispatcher:
+      path: Containers/Docker/es-cdr-dispatcher
 
     es-web-service:
       path: Containers/Docker/es-web-service
