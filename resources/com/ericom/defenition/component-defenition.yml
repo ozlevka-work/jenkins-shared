@@ -76,8 +76,8 @@ components:
     shield-maintenance:
       path: Containers/Docker/shield-maintenance
 
-    shield-squid-auth:
-      path: Containers/Docker/shield-squid-auth
+    es-proxy-auth:
+      path: Containers/Docker/es-proxy-auth
 
     shield-logspout:
       path: Containers/Docker/shield-logspout
