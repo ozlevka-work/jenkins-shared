@@ -128,7 +128,7 @@ class TestFlow implements Serializable{
             this.steps.echo "Going to check system ready in ${counter} retry"
             try {
                 def result = 0;
-                def res = this.steps.sh script: 'docker ps | grep proxy-server', returnStdout: true
+                def res = this.steps.sh script: 'docker ps | grep ' + this.config["test"]["proxy-name"], returnStdout: true
                 this.steps.echo res
 
                 if (res.contains('healthy')) {
@@ -136,7 +136,7 @@ class TestFlow implements Serializable{
                     result += 1
                 }
 
-                res = this.steps.sh script: 'docker ps | grep shield-authproxy', returnStdout: true
+                res = this.steps.sh script: 'docker ps | grep ' + this.config["test"]["auth-proxy-name"], returnStdout: true
                 this.steps.echo res
 
                 if (res.contains('healthy')) {

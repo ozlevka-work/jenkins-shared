@@ -112,6 +112,8 @@ test:
     files:
       - deploy-shield.sh
       - docker-compose.yml
+  auth-proxy-name: "es-proxy-auth"
+  proxy-name: "es-proxy-internal"
   pause: 120
   admin:
     timeout: 300
