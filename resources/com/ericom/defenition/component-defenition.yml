@@ -27,7 +27,7 @@ components:
       path: Containers/Docker/es-license-manager
       
     admin:
-      path: Containers/Docker/shield-admin
+      path: Containers/Docker/es-admin
 
     ubuntu:
       path: Containers/Docker/secure-remote-browser-ubuntu-base
@@ -41,7 +41,7 @@ components:
     consul:
           path: Containers/Docker/shield-configuration
     cef:
-      path: Containers/Docker/shield-cef
+      path: Containers/Docker/es-remote-browser
 
     es-proxy-internal:
       path: Containers/Docker/es-proxy-internal
@@ -50,7 +50,7 @@ components:
       path: Containers/Docker/es-policy-manager
 
     elk:
-      path: Containers/Docker/shield-elk
+      path: Containers/Docker/es-elk
 
     broker:
       path: Containers/Docker/shield-broker
