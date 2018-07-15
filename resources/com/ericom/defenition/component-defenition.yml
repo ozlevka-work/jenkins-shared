@@ -19,6 +19,9 @@ components:
       
     es-system-configuration:
       path: Containers/Docker/es-system-configuration
+
+    es-subsystems-configuration:
+      path: Containers/Docker/es-subsystems-configuration
     
     es-remote-browser-scaler:
       path: Containers/Docker/es-remote-browser-scaler
@@ -78,6 +81,9 @@ components:
 
     es-proxy-auth:
       path: Containers/Docker/es-proxy-auth
+
+    es-proxy-browsers-farm:
+      path: Containers/Docker/es-proxy-browsers-farm
 
     shield-logspout:
       path: Containers/Docker/shield-logspout
