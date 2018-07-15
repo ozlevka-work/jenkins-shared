@@ -53,10 +53,7 @@ components:
       path: Containers/Docker/es-policy-manager
 
     elk:
-      path: Containers/Docker/es-elk
-
-    broker:
-      path: Containers/Docker/shield-broker
+      path: Containers/Docker/es-elk   
 
     portainer:
       path: Containers/Docker/shield-portainer
