@@ -223,7 +223,7 @@ class TestFlow implements Serializable{
 
     def run_remote_system_test() {
         this.steps.stage("Test Remote system") {
-            this.steps.sh "Hello new and remote test"
+            this.steps.echo "Hello new and remote test"
         }
     }
 }
