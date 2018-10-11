@@ -103,7 +103,7 @@ test:
   admin:
     timeout: 300
     container: "securebrowsing/admin-test:180211-11.08"
-    componentTimeout: 40
+    componentTimeout: 60
     retries: 3
   wait:
     sleep: 30
