@@ -15,80 +15,108 @@ svc:
 components:
     admin:
       path: Containers/Docker/shield-admin
+      image: securebrowsing/shield-admin
 
     ubuntu:
       path: Containers/Docker/secure-remote-browser-ubuntu-base
+      image: securebrowsing/secure-remote-browser-ubuntu-base
       dependency:
         - nodejs
         - cef
+
     nodejs:
       path: Containers/Docker/secure-remote-browser-ubuntu-nodejs-xdummy
+      image: securebrowsing/secure-remote-browser-ubuntu-nodejs-xdummy
       dependency:
         - cef
+
     consul:
           path: Containers/Docker/shield-configuration
+          image: securebrowsing/shield-configuration
+
     cef:
       path: Containers/Docker/shield-cef
+      image: securebrowsing/shield-cef
 
     proxy:
       path: Containers/Docker/shield-squid-alpine
+      image: securebrowsing/proxy-server
 
     icap:
       path: Containers/Docker/shield-icap
+      image: securebrowsing/icap-server
 
     elk:
       path: Containers/Docker/shield-elk
+      image: securebrowsing/shield-elk
 
     broker:
       path: Containers/Docker/shield-broker
+      image: securebrowsing/broker-server
 
     portainer:
       path: Containers/Docker/shield-portainer
+      image: securebrowsing/shield-portainer
 
     collector:
       path: Containers/Docker/shield-collector
+      image:
 
     extproxy:
       path: Containers/Docker/shield-squid-ext
+      image: securebrowsing/extproxy
 
     shield-cdr-controller:
       path: Containers/Docker/shield-cdr-controller
+      image: securebrowsing/shield-cdr-controller
 
     shield-cdr-dispatcher:
       path: Containers/Docker/shield-cdr-dispatcher
+      image: securebrowsing/shield-cdr-dispatcher
 
     shield-web-service:
       path: Containers/Docker/shield-web-service
+      image: securebrowsing/shield-web-service
 
     shield-maintenance:
       path: Containers/Docker/shield-maintenance
+      image: securebrowsing/shield-maintenance
 
     shield-squid-auth:
       path: Containers/Docker/shield-squid-auth
+      image: securebrowsing/shield-authproxy
 
     shield-logspout:
       path: Containers/Docker/shield-logspout
+      image: securebrowsing/shield-logspout
 
     shield-consul-agent:
       path: Containers/Docker/shield-consul-agent
+      image: securebrowsing/shield-consul-agent
 
     netdata:
       path: Containers/Docker/shield-netdata
+      image: securebrowsing/netdata
 
     shield_swarm-exec:
       path: Containers/Docker/shield_swarm-exec
+      image: securebrowsing/shield_swarm-exec
 
     speedtest:
       path: Containers/Docker/shield-speedtest
+      image: securebrowsing/speedtest
 
     autoupdate:
       path: Containers/Docker/shield-autoupdate
+      image: securebrowsing/shield-autoupdate
 
     notifier:
       path: Containers/Docker/shield-notifier
+      image: securebrowsing/shield-notifier
       
     unbound:
       path: Containers/Docker/shield-unbound
+      image: securebrowsing/shield-dns
 
 test:
   urls:
@@ -108,3 +136,7 @@ test:
   wait:
     sleep: 30
     retries: 20
+
+registry:
+   address: 192.168.50.89
+   port: 5000
