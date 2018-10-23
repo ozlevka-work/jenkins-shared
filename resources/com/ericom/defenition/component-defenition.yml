@@ -89,6 +89,9 @@ components:
       
     unbound:
       path: Containers/Docker/shield-unbound
+    
+    proxyless:
+      path: Containers/Docker/squid-proxyless-connector
 
 test:
   urls:
