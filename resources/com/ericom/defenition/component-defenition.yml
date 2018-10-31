@@ -93,6 +93,9 @@ components:
     proxyless:
       path: Containers/Docker/squid-proxyless-connector
 
+    preview:
+      path: Containers/Docker/shield-preview
+
 test:
   urls:
     - http://ericom.com
