@@ -271,13 +271,21 @@ class PipeLine implements Serializable {
 
             this.steps.echo "Going run ${this.config['ansible']['build_playbook']} for paths ${build_path_array}"
 
-            this.steps.ansiblePlaybook(
+            /*this.steps.ansiblePlaybook(
                     playbook: this.config['ansible']['build_playbook'],
                     dynamicInventory: true,
                     extraVars: [
                          build_path: build_path_array,
                          docker_user: this.env.USERNAME,
                          docker_password: this.env.PASSWORD
+                    ]
+            )*/
+            this.steps.ansiblePlaybook(
+                    playbook: '/playbooks/test2.yml',
+                    inventory: '/playbooks/hosts',
+                    credentialsId: 'ansible-connect',
+                    extraVars: [
+                            test_var: [ "1", "2", "3" ]
                     ]
             )
         }
