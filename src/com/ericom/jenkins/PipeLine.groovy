@@ -162,7 +162,7 @@ class PipeLine implements Serializable {
             }
         }
 
-        return this.changeset.size() > 0
+        return true//this.changeset.size() > 0
     }
 
 
