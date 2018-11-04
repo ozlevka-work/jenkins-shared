@@ -269,7 +269,9 @@ class PipeLine implements Serializable {
                 build_path_array.add(this.config['components'][this.build_array[i]]['path'])
             }
 
-            this.steps.ansiblePlaybook(
+            this.steps.echo "Going run ${this.config['ansible']['build_playbook']} for paths ${build_path_array} and ${this.steps.ansiblePlaybook.getClass()}"
+
+            /*this.steps.ansiblePlaybook(
                     playbook: this.config['ansible']['build_playbook'],
                     dynamicInventory: true,
                     extraVars: [
@@ -277,7 +279,7 @@ class PipeLine implements Serializable {
                          docker_user: this.env.USERNAME,
                          docker_password: this.env.PASSWORD
                     ]
-            )
+            )*/
         }
     }
 }
