@@ -162,7 +162,7 @@ class PipeLine implements Serializable {
             }
         }
 
-        return true//this.changeset.size() > 0
+        return this.changeset.size() > 0
     }
 
 
@@ -271,23 +271,18 @@ class PipeLine implements Serializable {
 
             this.steps.echo "Going run ${this.config['ansible']['build_playbook']} for paths ${build_path_array}"
 
-            /*this.steps.ansiblePlaybook(
-                    playbook: this.config['ansible']['build_playbook'],
-                    dynamicInventory: true,
-                    extraVars: [
-                         build_path: build_path_array,
-                         docker_user: this.env.USERNAME,
-                         docker_password: this.env.PASSWORD
-                    ]
-            )*/
-            this.steps.ansiblePlaybook(
-                    playbook: '/playbooks/test2.yml',
-                    dynamicInventory: true,
-                    credentialsId: 'ansible-connect',
-                    extraVars: [
-                            test_var: [ "1", "2", "3" ]
-                    ]
-            )
+            this.steps.withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: this.config['credentials']['docker'],
+                                         usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                this.steps.ansiblePlaybook(
+                        playbook: this.config['ansible']['build_playbook'],
+                        dynamicInventory: true,
+                        extraVars: [
+                                build_path     : build_path_array,
+                                docker_user    : this.env.USERNAME,
+                                docker_password: this.env.PASSWORD
+                        ]
+                )
+            }
         }
     }
 }
