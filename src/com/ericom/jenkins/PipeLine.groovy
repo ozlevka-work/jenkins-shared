@@ -271,12 +271,7 @@ class PipeLine implements Serializable {
 
             ansiblePlaybook(
                     playbook: this.config['ansible']['build_playbook'],
-                    dynamicInventory: true,
-                    extraVars: [
-                         build_path: build_path_array,
-                         docker_user: env.USERNAME,
-                         docker_password: env.PASSWORD
-                    ]
+                    dynamicInventory: true
             )
         }
     }
