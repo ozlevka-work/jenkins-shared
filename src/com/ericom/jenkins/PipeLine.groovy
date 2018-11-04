@@ -38,6 +38,7 @@ class PipeLine implements Serializable {
                 runBuildChanged()
                 def test_flow = new TestFlow(this.steps, this.config, this.env)
                 makeDockerLogin()
+                uploadTemporaryImages()
                 //test_flow.run_npm_tests()
                 test_flow.run_remote_system_test()
                 uploadContainersWithTag(null)
@@ -234,6 +235,15 @@ class PipeLine implements Serializable {
                 } else {
                     this.steps.echo "Skip tests for ${key}"
                 }
+            }
+        }
+    }
+
+    def uploadTemporaryImages() {
+        this.steps.stage('Upload jenkins images') {
+            for(int i = 0; i < this.build_array.size(); i++) {
+                def buildPath = this.config['components'][this.build_array[i]]['path']
+                this.steps.sh "cd ${buildPath} && ./_upload.sh jenkins"
             }
         }
     }
