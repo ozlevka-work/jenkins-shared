@@ -274,8 +274,8 @@ class PipeLine implements Serializable {
                     dynamicInventory: true,
                     extraVars: [
                          build_path: build_path_array,
-                         docker_user: env.USERNAME,
-                         docker_password: env.PASSWORD
+                         docker_user: this.env.USERNAME,
+                         docker_password: this.env.PASSWORD
                     ]
             )
         }
