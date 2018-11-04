@@ -142,4 +142,4 @@ registry:
    port: 5000
 
 ansible:
-  build_playbook: /playbooks/test2.yml
+  build_playbook: /playbooks/test1.yml
