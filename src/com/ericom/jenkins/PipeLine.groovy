@@ -282,7 +282,7 @@ class PipeLine implements Serializable {
             )*/
             this.steps.ansiblePlaybook(
                     playbook: '/playbooks/test2.yml',
-                    inventory: '/playbooks/hosts',
+                    dynamicInventory: true,
                     credentialsId: 'ansible-connect',
                     extraVars: [
                             test_var: [ "1", "2", "3" ]
