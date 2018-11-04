@@ -222,8 +222,6 @@ class TestFlow implements Serializable{
 
 
     def run_remote_system_test() {
-        this.steps.stage("Push image to local registry") {
-            this.steps.sh "docker push "
-        }
+
     }
 }

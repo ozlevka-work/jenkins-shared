@@ -140,3 +140,6 @@ test:
 registry:
    address: 192.168.50.89
    port: 5000
+
+ansible:
+  build_playbook: /playbooks/test2.yml

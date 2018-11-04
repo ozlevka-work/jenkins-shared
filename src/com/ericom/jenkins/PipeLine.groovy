@@ -35,9 +35,11 @@ class PipeLine implements Serializable {
         try {
             if (fetchChangesCodeChanges()) {
                 runUnitTestForChanges()
-                runBuildChanged()
-                def test_flow = new TestFlow(this.steps, this.config, this.env)
                 makeDockerLogin()
+                runRemoteBuild()
+                //runBuildChanged()
+                def test_flow = new TestFlow(this.steps, this.config, this.env)
+
                 uploadTemporaryImages()
                 //test_flow.run_npm_tests()
                 test_flow.run_remote_system_test()
@@ -256,6 +258,26 @@ class PipeLine implements Serializable {
                 this.steps.sh "cd ${buildPath} && ./_build.sh"
                 this.steps.echo "Component ${this.build_array[i]} succesfully build"
             }
+        }
+    }
+
+    def runRemoteBuild() {
+        this.steps.stage('Remote Build Process') {
+            this.build_array = makeDependencies()
+            def build_path_array = []
+            for(int i = 0; i < this.build_array.size(); i++) {
+                build_path_array.add(this.config['components'][this.build_array[i]]['path'])
+            }
+
+            ansiblePlaybook(
+                    playbook: this.config['ansible']['build_playbook'],
+                    dynamicInventory: true,
+                    extraVars: [
+                         build_path: build_path_array,
+                         docker_user: env.USERNAME,
+                         docker_password: env.PASSWORD
+                    ]
+            )
         }
     }
 }
