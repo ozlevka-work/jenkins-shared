@@ -96,6 +96,18 @@ components:
     preview:
       path: Containers/Docker/shield-preview
 
+    license-manager:
+       path: Containers/Docker/es-license-manager
+ 
+    browser-scaler:
+       path: Containers/Docker/es-remote-browser-scaler
+
+    system-configuration:
+       path: Containers/Docker/es-system-configuration
+
+    system-monitor:
+       path: Containers/Docker/es-system-monitor
+
 test:
   urls:
     - http://ericom.com
