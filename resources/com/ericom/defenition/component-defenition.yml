@@ -108,6 +108,9 @@ components:
     system-monitor:
        path: Containers/Docker/es-system-monitor
 
+    farm-proxy:
+       path: Containers/Docker/es-proxy-browsers-farm
+       
 test:
   urls:
     - http://ericom.com
