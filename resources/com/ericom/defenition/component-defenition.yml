@@ -111,8 +111,8 @@ components:
     farm-proxy:
        path: Containers/Docker/es-proxy-browsers-farm
 
-    shield-categories:
-       path: Containers/Docker/shield-categories
+    es-policy-manager:
+       path: Containers/Docker/es-policy-manager
 
 test:
   urls:
