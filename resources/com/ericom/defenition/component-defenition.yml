@@ -110,7 +110,10 @@ components:
 
     farm-proxy:
        path: Containers/Docker/es-proxy-browsers-farm
-       
+
+    shield-categories:
+       path: Containers/Docker/shield-categories
+
 test:
   urls:
     - http://ericom.com
