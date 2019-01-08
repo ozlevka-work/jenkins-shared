@@ -114,6 +114,17 @@ components:
     es-policy-manager:
        path: Containers/Docker/es-policy-manager
 
+    es-api-gateway:
+       path: Containers/Docker/es-api-gateway
+
+    es-core-sync:
+       path: Containers/Docker/es-core-sync
+
+    es-farm-sync:
+       path: Containers/Docker/es-farm-sync
+
+    es-farm-scaler:
+       path: Containers/Docker/es-farm-scaler
 test:
   urls:
     - http://ericom.com
