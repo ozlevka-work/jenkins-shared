@@ -10,12 +10,32 @@ notification:
 
 svc:
   url: 'https://github.com/EricomSoftwareLtd/SB.git'
-  branch: master
+  branch: issue-533
 
 components:
+
+    es-system-monitor:
+      path: Containers/Docker/es-system-monitor
+      
+    es-system-configuration:
+      path: Containers/Docker/es-system-configuration
+
+    es-subsystems-configuration:
+      path: Containers/Docker/es-subsystems-configuration
+    
+    es-remote-browser-scaler:
+      path: Containers/Docker/es-remote-browser-scaler
+    
+    es-license-manager:
+      path: Containers/Docker/es-license-manager
+      
     admin:
+<<<<<<< HEAD
       path: Containers/Docker/shield-admin
       image: securebrowsing/shield-admin
+=======
+      path: Containers/Docker/es-admin
+>>>>>>> master
 
     ubuntu:
       path: Containers/Docker/secure-remote-browser-ubuntu-base
@@ -35,6 +55,7 @@ components:
           image: securebrowsing/shield-configuration
 
     cef:
+
       path: Containers/Docker/shield-cef
       image: securebrowsing/shield-cef
 
@@ -86,6 +107,30 @@ components:
       path: Containers/Docker/shield-squid-auth
       image: securebrowsing/shield-authproxy
 
+    es-collector:
+      path: Containers/Docker/es-collector
+
+    es-proxy-external:
+      path: Containers/Docker/es-proxy-external
+
+    es-cdr-controller:
+      path: Containers/Docker/es-cdr-controller
+
+    es-cdr-dispatcher:
+      path: Containers/Docker/es-cdr-dispatcher
+
+    es-web-service:
+      path: Containers/Docker/es-web-service
+
+    es-maintenance:
+      path: Containers/Docker/es-maintenance
+
+    es-proxy-auth:
+      path: Containers/Docker/es-proxy-auth
+
+    es-proxy-browsers-farm:
+      path: Containers/Docker/es-proxy-browsers-farm
+
     shield-logspout:
       path: Containers/Docker/shield-logspout
       image: securebrowsing/shield-logspout
@@ -118,15 +163,18 @@ components:
       path: Containers/Docker/shield-unbound
       image: securebrowsing/shield-dns
 
+
 test:
   urls:
-    - http://ericom.com
+    - http://google.com
     - http://ynet.co.il
   swarm:
-    repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/Dev/Setup
+    repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/NewNames%23533/Setup
     files:
       - deploy-shield.sh
       - docker-compose.yml
+  auth-proxy-name: "es-proxy-auth"
+  proxy-name: "es-proxy-internal"
   pause: 120
   admin:
     timeout: 300
