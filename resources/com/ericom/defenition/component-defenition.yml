@@ -48,6 +48,9 @@ components:
     collector:
       path: Containers/Docker/shield-collector
 
+    es-init-elasticsearch:
+      path: Containers/Docker/es-init-elasticsearch
+
     extproxy:
       path: Containers/Docker/shield-squid-ext
 
