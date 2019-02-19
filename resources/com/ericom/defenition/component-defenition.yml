@@ -140,7 +140,7 @@ test:
   pause: 120
   admin:
     timeout: 300
-    container: "securebrowsing/admin-test:180211-11.08"
+    container: "securebrowsing/admin-test:190219-16.46"
     componentTimeout: 60
     retries: 3
   wait:
