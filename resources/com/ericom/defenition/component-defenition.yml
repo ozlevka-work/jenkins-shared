@@ -137,9 +137,9 @@ test:
     files:
       - deploy-shield.sh
       - docker-compose.yml
-  pause: 120
+  pause: 300
   admin:
-    timeout: 300
+    timeout: 600
     container: "securebrowsing/admin-test:190219-16.46"
     componentTimeout: 60
     retries: 3
