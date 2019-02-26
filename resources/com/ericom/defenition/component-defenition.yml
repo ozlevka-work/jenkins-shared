@@ -141,8 +141,8 @@ test:
   admin:
     timeout: 600
     container: "securebrowsing/admin-test:190219-16.46"
-    componentTimeout: 60
-    retries: 3
+    componentTimeout: 90
+    retries: 5
   wait:
     sleep: 30
     retries: 20
