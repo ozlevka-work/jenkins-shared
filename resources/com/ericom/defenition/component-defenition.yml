@@ -132,6 +132,9 @@ components:
     es-shield-consul-backup:
        path: Containers/Docker/es-consul-backup
 
+    es-ldap-api:
+       path: Containers/Docker/es-ldap-api
+
 test:
   urls:
     - http://ericom.com
