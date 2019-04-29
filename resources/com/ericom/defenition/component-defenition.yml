@@ -128,6 +128,10 @@ components:
 
     es-farm-scaler:
        path: Containers/Docker/es-farm-scaler
+
+    es-shield-consul-backup:
+       path: Containers/Docker/es-consul-backup
+
 test:
   urls:
     - http://ericom.com
