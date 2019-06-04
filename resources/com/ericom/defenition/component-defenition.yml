@@ -134,6 +134,9 @@ components:
 
     es-ldap-api:
        path: Containers/Docker/es-ldap-api
+    
+    es-ldap-proxy:
+       path: Containers/Docker/es-ldap-proxy
 
 test:
   urls:
