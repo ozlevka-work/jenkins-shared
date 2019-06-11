@@ -138,7 +138,7 @@ components:
     es-ldap-proxy:
        path: Containers/Docker/es-ldap-proxy
 
-  es-syslog-forward:
+    es-syslog-forward:
        path: Containers/Docker/es-syslog-forward
 
 test:
