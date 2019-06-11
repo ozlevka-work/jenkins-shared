@@ -135,6 +135,9 @@ components:
     es-ldap-api:
        path: Containers/Docker/es-ldap-api
 
+  es-syslog-forward:
+       path: Containers/Docker/es-syslog-forward
+
 test:
   urls:
     - http://ericom.com
