@@ -141,9 +141,6 @@ components:
     es-syslog-forward:
        path: Containers/Docker/es-syslog-forward
 
-    es-now:
-       path: Containers/Docker/es-now
-
 test:
   urls:
     - http://ericom.com
