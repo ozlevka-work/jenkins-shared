@@ -111,6 +111,9 @@ components:
     system-monitor:
        path: Containers/Docker/es-system-monitor
 
+    mng-system-monitor:
+       path: Containers/Docker/es-mng-system-monitor
+
     farm-proxy:
        path: Containers/Docker/es-proxy-browsers-farm
 
