@@ -144,6 +144,9 @@ components:
     es-syslog-forward:
        path: Containers/Docker/es-syslog-forward
 
+    es-fluent-bit:
+       path: Containers/Docker/es-fluent-bit
+
 test:
   urls:
     - http://ericom.com
