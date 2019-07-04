@@ -146,6 +146,9 @@ components:
 
     es-fluent-bit:
        path: Containers/Docker/es-fluent-bit
+    
+    es-proxy-egress:
+       path: Containers/Docker/es-proxy-egress
 
 test:
   urls:
