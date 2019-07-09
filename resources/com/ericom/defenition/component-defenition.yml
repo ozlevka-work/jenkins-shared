@@ -147,6 +147,9 @@ components:
     es-fluent-bit:
        path: Containers/Docker/es-fluent-bit
 
+    es-virtual-client:
+       path: Containers/Docker/shield-virtual-client
+
 test:
   urls:
     - http://ericom.com
