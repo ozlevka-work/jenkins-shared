@@ -150,6 +150,9 @@ components:
     es-proxy-egress:
        path: Containers/Docker/es-proxy-egress
 
+    es-virtual-client:
+       path: Containers/Docker/shield-virtual-client
+
 test:
   urls:
     - http://ericom.com
