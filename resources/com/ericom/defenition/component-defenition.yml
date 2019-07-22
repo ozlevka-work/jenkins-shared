@@ -153,6 +153,9 @@ components:
     es-virtual-client:
        path: Containers/Docker/shield-virtual-client
 
+    es-mng-api:
+       path: Containers/Docker/es-mng-api
+
 test:
   urls:
     - http://ericom.com
