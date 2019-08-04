@@ -31,6 +31,10 @@ class PipeLine implements Serializable {
         this.config = yaml.load(yml)
     }
 
+    def getChangeSet() {
+        return this.changeset;
+    }
+
     def run() {
         try {
             if (fetchChangesCodeChanges()) {
