@@ -141,9 +141,9 @@ class PipeLine implements Serializable {
     def fetchChangesCodeChanges() {
         this.steps.stage("Fetch changes") {
             if (this.config["svc"].containsKey('branch')) {
-                this.steps.git([url: this.config['svc']['url'], credentialsId: this.config['credentials']['git'], branch: this.config['svc']['branch'], changelog: true])
+                this.steps.git([url: this.config['svc']['sb']['url'], credentialsId: this.config['credentials']['git'], branch: this.config['svc']['sb']['branch'], changelog: true])
             } else {
-                this.steps.git([url: this.config['svc']['url'], credentialsId: this.config['credentials']['git'], changelog: true])
+                this.steps.git([url: this.config['svc']['sb']['url'], credentialsId: this.config['credentials']['git'], changelog: true])
             }
 
             def changeLogSets = this.currentBuild.rawBuild.changeSets
@@ -181,6 +181,8 @@ class PipeLine implements Serializable {
 
             this.steps.echo "List of build containers: ${this.containers_names}"
         }
+
+        return tag
     }
 
     def findComponent(String path) {

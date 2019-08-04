@@ -1,7 +1,7 @@
 
 credentials:
   git: ozlevka-github
-  docker: beny-docker
+  docker: ozlevka-docker
 
 notification:
   mails:
@@ -9,32 +9,47 @@ notification:
     - lev.ozeryansky@ericom.com
 
 svc:
-  url: 'https://github.com/EricomSoftwareLtd/SB.git'
-  branch: kube-build
+  sb:
+    url: 'https://github.com/EricomSoftwareLtd/SB.git'
+    branch: kube-build
+  kube:
+    url: 'https://github.com/EricomSoftwareLtd/SB.git'
+    branch: kube-build
 
 components:
     admin:
       path: Containers/Docker/shield-admin
+      container: "securebrowsing/shield-admin"
+      kubeName: "esAdmin"
 
     ubuntu:
       path: Containers/Docker/secure-remote-browser-ubuntu-base
       dependency:
         - nodejs
         - cef
+
     nodejs:
       path: Containers/Docker/secure-remote-browser-ubuntu-nodejs-xdummy
       dependency:
         - cef
+
     consul:
           path: Containers/Docker/shield-configuration
+
     cef:
       path: Containers/Docker/shield-cef
+      container: "securebrowsing/shield-cef"
+      kubeName: "esRemoteBrowser"
 
     proxy:
       path: Containers/Docker/shield-squid-alpine
+      container: "securebrowsing/proxy-server"
+      kubeName: "esProxyServer"
 
     icap:
       path: Containers/Docker/shield-icap
+      container: "securebrowsing/icap-server"
+      kubeName: "esIcap"
 
     elk:
       path: Containers/Docker/shield-elk
@@ -50,24 +65,36 @@ components:
 
     es-init-elasticsearch:
       path: Containers/Docker/es-init-elasticsearch
+      container: "securebrowsing/es-init-elasticsearch"
+      kubeName: "esInitElasticsearch"
 
     extproxy:
       path: Containers/Docker/shield-squid-ext
+      container: "securebrowsing/extproxy"
+      kubeName: "esProxyExternal"
 
     shield-cdr-controller:
       path: Containers/Docker/shield-cdr-controller
+      container: "securebrowsing/shield-cdr-controller"
+      kubeName: "esCdrController"
 
     shield-cdr-dispatcher:
       path: Containers/Docker/shield-cdr-dispatcher
+      container: "securebrowsing/shield-cdr-dispatcher"
+      kubeName: "esCdrDispatcher"
 
     shield-web-service:
       path: Containers/Docker/shield-web-service
+      container: "securebrowsing/shield-web-service"
+      kubeName: "esWebService"
 
     shield-maintenance:
       path: Containers/Docker/shield-maintenance
 
     shield-squid-auth:
       path: Containers/Docker/shield-squid-auth
+      container: "securebrowsing/shield-authproxy"
+      kubeName: "esProxyAuth"
 
     shield-logspout:
       path: Containers/Docker/shield-logspout
@@ -89,72 +116,113 @@ components:
 
     notifier:
       path: Containers/Docker/shield-notifier
+      container: "securebrowsing/shield-notifier"
+      kubeName: "esNotifier"
       
     unbound:
       path: Containers/Docker/shield-unbound
+      container: "securebrowsing/shield-dns"
+      kubeName: "esDns"
     
     proxyless:
       path: Containers/Docker/squid-proxyless-connector
+      container: "securebrowsing/shield-proxyless-connector"
+      kubeName: "esProxyLess"
 
     preview:
       path: Containers/Docker/shield-preview
+      container: "securebrowsing/es-file-preview"
+      kubeName: "esFilePreview"
 
     license-manager:
        path: Containers/Docker/es-license-manager
+       container: "securebrowsing/es-license-manager"
+       kubeName: "esLicenseManager"
  
     browser-scaler:
        path: Containers/Docker/es-remote-browser-scaler
+       container: "securebrowsing/k8s-browser-scheduler"
+       kubeName: "esBrowserScheduler"
 
     system-configuration:
        path: Containers/Docker/es-system-configuration
+       container: "securebrowsing/es-system-configuration"
+       kubeName: "esSystemConfiguration"
 
     system-monitor:
        path: Containers/Docker/es-system-monitor
 
     mng-system-monitor:
        path: Containers/Docker/es-mng-system-monitor
+       container: "securebrowsing/es-mng-system-monitor"
+       kubeName: "esSystemMonitor"
 
     farm-proxy:
        path: Containers/Docker/es-proxy-browsers-farm
 
     es-policy-manager:
        path: Containers/Docker/es-policy-manager
+       container: "securebrowsing/es-policy-manager"
+       kubeName: "esPolicyManager"
 
     es-api-gateway:
        path: Containers/Docker/es-api-gateway
+       container: "securebrowsing/es-api-gateway"
+       kubeName: "esApiGateway"
 
     es-core-sync:
        path: Containers/Docker/es-core-sync
+       container: "securebrowsing/es-core-sync"
+       kubeName: "esCoreSync"
 
     es-farm-sync:
        path: Containers/Docker/es-farm-sync
+       container: "securebrowsing/es-farm-sync"
+       kubeName: "esFarmSync"
 
     es-farm-scaler:
        path: Containers/Docker/es-farm-scaler
+       container: "securebrowsing/es-farm-scaler"
+       kubeName: "esFarmScaler"
 
     es-shield-consul-backup:
        path: Containers/Docker/es-consul-backup
+       container: "securebrowsing/es-shield-consul-backup"
+       kubeName: "esConsulBackup"
 
     es-ldap-api:
        path: Containers/Docker/es-ldap-api
+       container: "securebrowsing/es-ldap-api"
+       kubeName: "esLdapApi"
     
     es-ldap-proxy:
        path: Containers/Docker/es-ldap-proxy
+       container: "securebrowsing/es-ldap-proxy"
+       kubeName: "esLdapProxy"
 
     es-syslog-forward:
        path: Containers/Docker/es-syslog-forward
 
     es-fluent-bit:
        path: Containers/Docker/es-fluent-bit
+       container: "securebrowsing/es-fluent-bit"
+       kubeName: "fluentBit"
     
     es-proxy-egress:
        path: Containers/Docker/es-proxy-egress
+       container: "securebrowsing/es-proxy-egress"
+       kubeName: "esProxyEgress"
 
     es-virtual-client:
        path: Containers/Docker/shield-virtual-client
 
     es-mng-api:
        path: Containers/Docker/es-mng-api
+
+    es-now:
+      path: Containers/Docker/es-now
+      container: "securebrowsing/es-now"
+      kubeName: "esNow"
 
 test:
   urls:
