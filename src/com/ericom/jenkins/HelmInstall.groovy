@@ -20,4 +20,30 @@ class HelmInstall implements Serializable {
     def readChartValues(valuesPath) {
         this.chartValues = this.steps.readYaml(file: valuesPath)
     }
+
+    def updateValues(tag) {
+        for (def a : this.buildParams["rootKey"].keySet()) {
+            if (this.config["components"].containsKey(a)) {
+                def cnf = this.config["components"][a]
+                this.updateChartValueWithTag(cnf['kubeName'], cnf['containerName'], tag)
+            }
+        }
+    }
+
+    def updateChartValueWithTag(kubeName, containerName, tag) {
+        def containerFullName = String.format("%s:%s", containerName, tag)
+        if ( kubeName == "fluentBit" ) {
+            this.chartValues["elk"]["fluent-bit-out-syslog"]["images"][kubeName] = containerFullName
+        } else {
+
+            this.chartValues["shield-mng"]["images"][kubeName] = containerFullName
+            this.chartValues["shield-proxy"]["images"][kubeName] = containerFullName
+            this.chartValues["farm-services"]["images"][kubeName] = containerFullName
+
+            if ( kubeName == "esInitElasticsearch" ) {
+                this.chartValues["elk"]["fluent-bit-out-syslog"]["images"][kubeName] = containerFullName
+                this.chartValues["elk"]["management"]["images"][kubeName] = containerFullName
+            }
+        }
+    }
 }
