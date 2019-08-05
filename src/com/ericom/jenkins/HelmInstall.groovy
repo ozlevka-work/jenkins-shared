@@ -12,6 +12,6 @@ class HelmInstall implements Serializable {
     }
 
     def checkParams() {
-        this.steps.echo "${this.builParams.getClass().getName()}"
+        this.steps.echo "${this.buildParams.rootKey}"
     }
 }
