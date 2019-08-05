@@ -25,7 +25,7 @@ class HelmInstall implements Serializable {
         for (def a : this.buildParams["rootKey"].keySet()) {
             if (this.config["components"].containsKey(a)) {
                 def cnf = this.config["components"][a]
-                this.updateChartValueWithTag(cnf['kubeName'], cnf['containerName'], tag)
+                this.updateChartValueWithTag(cnf['kubeName'], cnf['container'], tag)
             }
         }
     }
