@@ -4,6 +4,8 @@ class HelmInstall implements Serializable {
     def steps
     def currentBuild
     def buildParams
+    def config
+    def chartValues
 
     HelmInstall(steps, currentBuild, buildParams) {
         this.steps = steps
@@ -11,7 +13,11 @@ class HelmInstall implements Serializable {
         this.buildParams = buildParams
     }
 
-    def checkParams() {
-        this.steps.echo "${this.buildParams.rootKey}"
+    def loadConfig(yaml) {
+        this.config = this.steps.readYaml(text: yaml)
+    }
+
+    def readChartValues(valuesPath) {
+        this.chartValues = this.steps.readYaml(file: valuesPath)
     }
 }
