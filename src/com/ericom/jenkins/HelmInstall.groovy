@@ -5,11 +5,10 @@ class HelmInstall implements Serializable {
     def currentBuild
     def builParams
 
-    HelmInstall(steps, currentBuild, buidParams) {
+    HelmInstall(steps, currentBuild, buildParams) {
         this.steps = steps
         this.currentBuild = currentBuild
-
-        this.builParams = steps.readJSON text: buidParams
+        this.builParams = buildParams
     }
 
     def checkParams() {
