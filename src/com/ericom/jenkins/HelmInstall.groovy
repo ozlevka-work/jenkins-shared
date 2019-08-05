@@ -8,7 +8,7 @@ class HelmInstall implements Serializable {
     HelmInstall(steps, currentBuild, buildParams) {
         this.steps = steps
         this.currentBuild = currentBuild
-        this.builParams = buildParams
+        this.buildParams = buildParams
     }
 
     def checkParams() {
