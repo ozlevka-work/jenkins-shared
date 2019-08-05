@@ -33,9 +33,6 @@ components:
       dependency:
         - cef
 
-    consul:
-          path: Containers/Docker/shield-configuration
-
     cef:
       path: Containers/Docker/shield-cef
       container: "securebrowsing/shield-cef"
@@ -50,18 +47,6 @@ components:
       path: Containers/Docker/shield-icap
       container: "securebrowsing/icap-server"
       kubeName: "esIcap"
-
-    elk:
-      path: Containers/Docker/shield-elk
-
-    broker:
-      path: Containers/Docker/shield-broker
-
-    portainer:
-      path: Containers/Docker/shield-portainer
-
-    collector:
-      path: Containers/Docker/shield-collector
 
     es-init-elasticsearch:
       path: Containers/Docker/es-init-elasticsearch
@@ -88,31 +73,13 @@ components:
       container: "securebrowsing/shield-web-service"
       kubeName: "esWebService"
 
-    shield-maintenance:
-      path: Containers/Docker/shield-maintenance
-
     shield-squid-auth:
       path: Containers/Docker/shield-squid-auth
       container: "securebrowsing/shield-authproxy"
       kubeName: "esProxyAuth"
 
-    shield-logspout:
-      path: Containers/Docker/shield-logspout
-
-    shield-consul-agent:
-      path: Containers/Docker/shield-consul-agent
-
-    netdata:
-      path: Containers/Docker/shield-netdata
-
-    shield_swarm-exec:
-      path: Containers/Docker/shield_swarm-exec
-
     speedtest:
       path: Containers/Docker/shield-speedtest
-
-    autoupdate:
-      path: Containers/Docker/shield-autoupdate
 
     notifier:
       path: Containers/Docker/shield-notifier
@@ -199,9 +166,6 @@ components:
        path: Containers/Docker/es-ldap-proxy
        container: "securebrowsing/es-ldap-proxy"
        kubeName: "esLdapProxy"
-
-    es-syslog-forward:
-       path: Containers/Docker/es-syslog-forward
 
     es-fluent-bit:
        path: Containers/Docker/es-fluent-bit

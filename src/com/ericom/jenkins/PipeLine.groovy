@@ -35,6 +35,12 @@ class PipeLine implements Serializable {
         return this.changeset;
     }
 
+    def getChangeSetAsJSON() {
+        def json = new groovy.json.JsonBuilder()
+        json rootKey: this.changeset
+        return json.toString()
+    }
+
     def run() {
         try {
             if (fetchChangesCodeChanges()) {
