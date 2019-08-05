@@ -3,7 +3,7 @@ package com.ericom.jenkins
 class HelmInstall implements Serializable {
     def steps
     def currentBuild
-    def builParams
+    def buildParams
 
     HelmInstall(steps, currentBuild, buildParams) {
         this.steps = steps
