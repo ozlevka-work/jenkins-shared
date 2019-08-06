@@ -48,21 +48,34 @@ class HelmInstall implements Serializable {
     }
 
     def clearRunningCluster() {
-        def counter = 0
-        def clusterCurrent = this.steps.sh script: '''
+
+        def helm_get_cmd = '''
            #!/bin/bash
            helm ls | grep DEPLOYED | awk '{print $1}'
            
-        ''', returnStdout: true
-        def deployed = clusterCurrent.split('\n')
-        if(deployed.size() > 0 && deployed[0] != '') {
-            for(def ln : deployed) {
-                this.steps.echo "Going delete ${counter}: ${ln}"
-                this.steps.sh script: """
+        '''
+        this.runCommandSplitOutputAndRun(helm_get_cmd,"""
                     #!/bin/bash
-                    helm delete --purge ${ln}
-                """
-                counter++
+                    helm delete --purge %s
+        """)
+
+        def purge_browsers_cmd = '''
+            #!/bin/bash
+            kubectl -n farm-services get job | grep -v NAME | awk '{print $1}'
+        '''
+        this.runCommandSplitOutputAndRun(purge_browsers_cmd, """
+             #!/bin/bash
+             kubectl -n farm-services delete job %s
+        """)
+    }
+
+    def runCommandSplitOutputAndRun(command, template) {
+        def commandOutput = this.steps.sh script: command, returnStdout: true
+        def command_out_array = commandOutput.split('\n')
+        if (command_out_array.size() > 0 && command_out_array[0] != '') {
+            for(def el : command_out_array) {
+                def cmd = template.format(el)
+                this.steps.sh script: cmd
             }
         }
     }
