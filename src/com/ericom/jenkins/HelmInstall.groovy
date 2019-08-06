@@ -46,4 +46,24 @@ class HelmInstall implements Serializable {
             }
         }
     }
+
+    def clearRunningCluster() {
+        def counter = 0
+        def clusterCurrent = this.steps.sh script: '''
+           #!/bin/bash
+           helm ls | grep DEPLOYED | awk '{print $1}'
+           
+        ''', returnStdout: true
+        def deployed = clusterCurrent.split('\n')
+        if(deployed.size() > 0 && deployed[0] != '') {
+            for(def ln : deployed) {
+                this.steps.echo "Going delete ${counter}: ${ln}"
+                this.steps.sh script: """
+                    #!/bin/bash
+                    helm delete --purge ${ln}
+                """
+                counter++
+            }
+        }
+    }
 }
