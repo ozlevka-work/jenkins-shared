@@ -192,7 +192,7 @@ class PipeLine implements Serializable {
             this.steps.echo "List of build containers: ${this.containers_names}"
         }
 
-        return tag
+        return "${tag}-${env.BUILD_NUMBER}"
     }
 
     def findComponent(String path) {
