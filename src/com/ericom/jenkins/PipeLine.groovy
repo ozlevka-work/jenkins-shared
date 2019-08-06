@@ -41,6 +41,10 @@ class PipeLine implements Serializable {
         return json.toString()
     }
 
+    def getKubeBranch() {
+        return this.config["svc"]["kube"]["branch"]
+    }
+
     def run() {
         try {
             if (fetchChangesCodeChanges()) {
