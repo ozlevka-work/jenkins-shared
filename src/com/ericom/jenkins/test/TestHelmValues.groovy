@@ -10,7 +10,7 @@ class TestHelmValues {
 
     TestHelmValues() {
         def str = """
-            { "rootKey": {"es-now": true, "es-fluent-bit": true}} 
+            { "rootKey": {"es-ldap-api": true, "es-fluent-bit": true}} 
         """
         def params = JSONObject.fromObject(str)
         this.helm = new HelmInstall(null, null, params)

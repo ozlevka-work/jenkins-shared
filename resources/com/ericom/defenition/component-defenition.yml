@@ -183,11 +183,6 @@ components:
     es-mng-api:
        path: Containers/Docker/es-mng-api
 
-    es-now:
-      path: Containers/Docker/es-now
-      container: "securebrowsing/es-now"
-      kubeName: "esNow"
-
 test:
   urls:
     - http://ericom.com
