@@ -70,12 +70,11 @@ class HelmInstall implements Serializable {
     }
 
     def runCommandSplitOutputAndRun(command, template) {
-        this.steps.echo "${template}"
         def commandOutput = this.steps.sh script: command, returnStdout: true
         def command_out_array = commandOutput.split('\n')
         if (command_out_array.size() > 0 && command_out_array[0] != '') {
             for(def el : command_out_array) {
-                def cmd = template.format(el)
+                def cmd = String.format(template, el)
                 this.steps.sh script: cmd
             }
         }
