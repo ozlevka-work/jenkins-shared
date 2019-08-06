@@ -54,13 +54,19 @@ class HelmInstall implements Serializable {
            helm ls | grep DEPLOYED | awk '{print $1}'
            
         '''
-        this.runCommandSplitOutputAndRun(helm_get_cmd,"helm delete --purge %s")
+        this.runCommandSplitOutputAndRun(helm_get_cmd,"""
+                    #!/bin/bash
+                    helm delete --purge %s
+        """)
 
         def purge_browsers_cmd = '''
             #!/bin/bash
             kubectl -n farm-services get job | grep -v NAME | awk '{print $1}'
         '''
-        this.runCommandSplitOutputAndRun(purge_browsers_cmd, "kubectl -n farm-services delete job %s")
+        this.runCommandSplitOutputAndRun(purge_browsers_cmd, """
+             #!/bin/bash
+             kubectl -n farm-services delete job %s
+        """)
     }
 
     def runCommandSplitOutputAndRun(command, template) {
