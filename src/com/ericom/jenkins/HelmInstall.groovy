@@ -75,6 +75,7 @@ class HelmInstall implements Serializable {
         if (command_out_array.size() > 0 && command_out_array[0] != '') {
             for(def el : command_out_array) {
                 def cmd = template.format(el)
+                this.steps.echo "${cmd}"
                 this.steps.sh script: cmd
             }
         }
