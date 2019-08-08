@@ -179,6 +179,8 @@ components:
 
     es-virtual-client:
        path: Containers/Docker/shield-virtual-client
+       container: "securebrowsing/es-virtual-client"
+       kubeName: "esVirtualClient"
 
     es-mng-api:
        path: Containers/Docker/es-mng-api
