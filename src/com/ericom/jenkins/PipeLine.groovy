@@ -150,12 +150,7 @@ class PipeLine implements Serializable {
 
     def fetchChangesCodeChanges() {
         this.steps.stage("Fetch changes") {
-            if (this.config["svc"].containsKey('branch')) {
-                this.steps.git([url: this.config['svc']['sb']['url'], credentialsId: this.config['credentials']['git'], branch: this.config['svc']['sb']['branch'], changelog: true])
-            } else {
-                this.steps.git([url: this.config['svc']['sb']['url'], credentialsId: this.config['credentials']['git'], changelog: true])
-            }
-
+            this.steps.git([url: this.config['svc']['sb']['url'], credentialsId: this.config['credentials']['git'], branch: this.config['svc']['sb']['branch'], changelog: true])
             def changeLogSets = this.currentBuild.rawBuild.changeSets
             for (int i = 0; i < changeLogSets.size(); i++) {
                 def entries = changeLogSets[i].items
