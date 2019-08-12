@@ -9,6 +9,7 @@ notification:
     - lev.ozeryansky@ericom.com
 
 svc:
+
   sb:
     url: 'https://github.com/EricomSoftwareLtd/SB.git'
     branch: kube-build
@@ -16,7 +17,24 @@ svc:
     url: 'https://github.com/EricomSoftwareLtd/SB.git'
     branch: kube-build
 
+
 components:
+
+    es-system-monitor:
+      path: Containers/Docker/es-system-monitor
+      
+    es-system-configuration:
+      path: Containers/Docker/es-system-configuration
+
+    es-subsystems-configuration:
+      path: Containers/Docker/es-subsystems-configuration
+    
+    es-remote-browser-scaler:
+      path: Containers/Docker/es-remote-browser-scaler
+    
+    es-license-manager:
+      path: Containers/Docker/es-license-manager
+      
     admin:
       path: Containers/Docker/shield-admin
       container: "securebrowsing/shield-admin"
@@ -58,6 +76,7 @@ components:
       container: "securebrowsing/extproxy"
       kubeName: "esProxyExternal"
 
+
     shield-cdr-controller:
       path: Containers/Docker/shield-cdr-controller
       container: "securebrowsing/shield-cdr-controller"
@@ -78,8 +97,8 @@ components:
       container: "securebrowsing/shield-authproxy"
       kubeName: "esProxyAuth"
 
-    speedtest:
-      path: Containers/Docker/shield-speedtest
+    es-speedtest:
+      path: Containers/Docker/es-speedtest
 
     notifier:
       path: Containers/Docker/shield-notifier
@@ -187,10 +206,10 @@ components:
 
 test:
   urls:
-    - http://ericom.com
+    - http://google.com
     - http://ynet.co.il
   swarm:
-    repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/Dev/Setup
+    repo: https://raw.githubusercontent.com/EricomSoftwareLtd/Shield/NewNames%23533/Setup
     files:
       - deploy-shield.sh
       - docker-compose.yml
