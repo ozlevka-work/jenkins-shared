@@ -64,8 +64,12 @@ components:
     es-proxy-external:
       path: Containers/Docker/es-proxy-external
 
-    es-cdr-controller:
-      path: Containers/Docker/es-cdr-controller
+    es-init-elasticsearch:
+      path: Containers/Docker/es-init-elasticsearch
+
+    extproxy:
+      path: Containers/Docker/shield-squid-ext
+
 
     es-cdr-dispatcher:
       path: Containers/Docker/es-cdr-dispatcher
@@ -103,8 +107,71 @@ components:
     es-notifier:
       path: Containers/Docker/es-notifier
       
-    es-dns:
-      path: Containers/Docker/es-dns
+    unbound:
+      path: Containers/Docker/shield-unbound
+    
+    proxyless:
+      path: Containers/Docker/squid-proxyless-connector
+
+    preview:
+      path: Containers/Docker/shield-preview
+
+    license-manager:
+       path: Containers/Docker/es-license-manager
+ 
+    browser-scaler:
+       path: Containers/Docker/es-remote-browser-scaler
+
+    system-configuration:
+       path: Containers/Docker/es-system-configuration
+
+    system-monitor:
+       path: Containers/Docker/es-system-monitor
+
+    mng-system-monitor:
+       path: Containers/Docker/es-mng-system-monitor
+
+    farm-proxy:
+       path: Containers/Docker/es-proxy-browsers-farm
+
+    es-policy-manager:
+       path: Containers/Docker/es-policy-manager
+
+    es-api-gateway:
+       path: Containers/Docker/es-api-gateway
+
+    es-core-sync:
+       path: Containers/Docker/es-core-sync
+
+    es-farm-sync:
+       path: Containers/Docker/es-farm-sync
+
+    es-farm-scaler:
+       path: Containers/Docker/es-farm-scaler
+
+    es-shield-consul-backup:
+       path: Containers/Docker/es-consul-backup
+
+    es-ldap-api:
+       path: Containers/Docker/es-ldap-api
+    
+    es-ldap-proxy:
+       path: Containers/Docker/es-ldap-proxy
+
+    es-syslog-forward:
+       path: Containers/Docker/es-syslog-forward
+
+    es-fluent-bit:
+       path: Containers/Docker/es-fluent-bit
+    
+    es-proxy-egress:
+       path: Containers/Docker/es-proxy-egress
+
+    es-virtual-client:
+       path: Containers/Docker/shield-virtual-client
+
+    es-mng-api:
+       path: Containers/Docker/es-mng-api
 
 test:
   urls:
@@ -115,14 +182,12 @@ test:
     files:
       - deploy-shield.sh
       - docker-compose.yml
-  auth-proxy-name: "es-proxy-auth"
-  proxy-name: "es-proxy-internal"
-  pause: 120
+  pause: 300
   admin:
-    timeout: 300
-    container: "securebrowsing/admin-test:180211-11.08"
-    componentTimeout: 40
-    retries: 3
+    timeout: 600
+    container: "securebrowsing/admin-test:190219-16.46"
+    componentTimeout: 90
+    retries: 5
   wait:
     sleep: 30
     retries: 20
