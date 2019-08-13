@@ -1,9 +1,6 @@
 @Grab(group = 'org.yaml', module='snakeyaml', version = "1.18")
 import com.ericom.jenkins.PipeLine
 import com.ericom.jenkins.test.TestBase
-import groovyx.gpars.GParsExecutorsPool
-import groovyx.gpars.group.DefaultPGroup
-import org.yaml.snakeyaml.Yaml
 
 import java.util.concurrent.ExecutorService
 

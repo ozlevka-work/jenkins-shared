@@ -1,8 +1,9 @@
-import com.ericom.jenkins.test.EricomYamlParser
+import com.ericom.jenkins.test.TestHelmValues
 
 
 def test1() {
     println("Hello test")
 }
 
-println(new File(".").getAbsoluteFile().getParent())
+def testHelm = new TestHelmValues()
+testHelm.runTest()
