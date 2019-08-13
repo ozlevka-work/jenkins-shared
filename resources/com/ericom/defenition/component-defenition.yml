@@ -9,13 +9,12 @@ notification:
     - lev.ozeryansky@ericom.com
 
 svc:
-
   sb:
     url: 'https://github.com/EricomSoftwareLtd/SB.git'
-    branch: kube-build
+    branch: master
   kube:
     url: 'https://github.com/EricomSoftwareLtd/SB.git'
-    branch: kube-build
+    branch: Dev
 
 
 components:
