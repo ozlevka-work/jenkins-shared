@@ -33,7 +33,7 @@ class HelmInstall implements Serializable {
     def updateChartValueWithTag(kubeName, containerName, tag) {
         def containerFullName = String.format("%s:%s", containerName, tag)
         if ( kubeName == "fluentBit" ) {
-            this.chartValues["elk"]["fluent-bit-out-syslog"]["images"][kubeName] = containerFullName
+            this.chartValues["common"]["fluent-bit-out-syslog"]["images"][kubeName] = containerFullName
         } else {
 
             this.chartValues["shield-mng"]["images"][kubeName] = containerFullName
@@ -41,8 +41,12 @@ class HelmInstall implements Serializable {
             this.chartValues["farm-services"]["images"][kubeName] = containerFullName
 
             if ( kubeName == "esInitElasticsearch" ) {
-                this.chartValues["elk"]["fluent-bit-out-syslog"]["images"][kubeName] = containerFullName
+                this.chartValues['common']['fluent-bit-out-syslog']['images'][kubeName] = containerFullName
                 this.chartValues["elk"]["management"]["images"][kubeName] = containerFullName
+            }
+
+            if (kubeName == "esCollector") {
+                this.chartValues['common']['fluent-bit-out-syslog']['images'][kubeName] = containerFullName
             }
         }
     }
