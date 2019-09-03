@@ -31,6 +31,10 @@ class HelmInstall implements Serializable {
     }
 
     def updateChartValueWithTag(kubeName, containerName, tag) {
+        if (containerName == null) {
+            return
+        }
+
         def containerFullName = String.format("%s:%s", containerName, tag)
         if ( kubeName == "fluentBit" ) {
             this.chartValues["common"]["fluent-bit-out-syslog"]["images"][kubeName] = containerFullName
