@@ -203,6 +203,11 @@ components:
     es-mng-api:
        path: Containers/Docker/es-mng-api
 
+    collector:
+      path: Containers/Docker/shield-collector
+      container: "securebrowsing/hield-collector"
+      kubeName: "esCollector"
+
 test:
   urls:
     - http://google.com
