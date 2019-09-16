@@ -205,7 +205,7 @@ components:
 
     collector:
       path: Containers/Docker/shield-collector
-      container: "securebrowsing/hield-collector"
+      container: "securebrowsing/shield-collector"
       kubeName: "esCollector"
 
 test:
