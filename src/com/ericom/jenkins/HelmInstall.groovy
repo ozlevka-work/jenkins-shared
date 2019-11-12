@@ -6,6 +6,7 @@ class HelmInstall implements Serializable {
     def buildParams
     def config
     def chartValues
+    def latestValues
 
     HelmInstall(steps, currentBuild, buildParams) {
         this.steps = steps
@@ -19,6 +20,10 @@ class HelmInstall implements Serializable {
 
     def readChartValues(valuesPath) {
         this.chartValues = this.steps.readYaml(file: valuesPath)
+    }
+
+    def readLatestValues(yaml) {
+        this.latestValues = this.steps.readYaml(text: yaml)
     }
 
     def updateValues(tag) {
@@ -36,6 +41,11 @@ class HelmInstall implements Serializable {
         }
 
         def containerFullName = String.format("%s:%s", containerName, tag)
+
+        if(this.latestValues != null && this.latestValues.containsKey(kubeName)) {
+            this.latestValues[kubeName] = containerFullName
+        }
+
         if ( kubeName == "esfluentBit" ) {
             this.chartValues["common"]["fluent-bit-out-syslog"]["images"][kubeName] = containerFullName
         } else {
