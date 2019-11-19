@@ -188,7 +188,7 @@ components:
     es-fluent-bit:
        path: Containers/Docker/es-fluent-bit
        container: "securebrowsing/es-fluent-bit"
-       kubeName: "fluentBit"
+       kubeName: "esfluentBit"
     
     es-proxy-egress:
        path: Containers/Docker/es-proxy-egress
