@@ -124,10 +124,10 @@ components:
        container: "securebrowsing/es-license-manager"
        kubeName: "esLicenseManager"
  
-    browser-scaler:
-       path: Containers/Docker/es-remote-browser-scaler
-       container: "securebrowsing/k8s-browser-scheduler"
-       kubeName: "esBrowserScheduler"
+#    browser-scaler:
+#       path: Containers/Docker/es-remote-browser-scaler
+#       container: "securebrowsing/k8s-browser-scheduler"
+#       kubeName: "esBrowserScheduler"
 
     system-configuration:
        path: Containers/Docker/es-system-configuration
