@@ -207,6 +207,16 @@ components:
       path: Containers/Docker/shield-collector
       container: "securebrowsing/shield-collector"
       kubeName: "esCollector"
+    
+    es-status:
+      path: Containers/Docker/shield-automation/es-status
+    
+    es-test-browser-counter:
+      path: Containers/Docker/shield-automation/es-test-browser-counter
+
+    es-tester:
+      path: Containers/Docker/shield-automation/es-tester
+
 
 test:
   urls:
